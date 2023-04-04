@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    @apply min-h-screen;
+
+    min-width: 100vw;
+}
+
+.min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.bg-brand {
+    @apply bg-gradient-to-b bg-gradient-to-b from-[#4DABF7] to-[#1864AB] text-white;
+}
+
+.flex-center{
+    @apply flex justify-center items-center;
+}
+
+.btn-dark {
+    @apply bg-gray-900;
+}
