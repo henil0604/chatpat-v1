@@ -9,7 +9,7 @@
 >
     <p>
         Hey{" "}
-        <span class="font-bold text-blue-600">{user.name}</span>! You have
+        <span class="font-bold text-blue-600">{user?.name}</span>! You have
         pre-registered successfully.
     </p>
     <p>You will be notified ASAP we choose you for early access.</p>
