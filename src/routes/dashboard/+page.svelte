@@ -9,13 +9,13 @@
 
 <div class="w-full min-h-screen bg-brand">
     <main
-        class="w-full h-screen bg-brand flex items-center flex-col text-white transition-all py-32"
+        class="w-full h-screen bg-brand flex items-center flex-col text-white transition-all py-32 max-sm:py-12"
     >
         <!-- ACCOUNT  -->
         <AccountCard />
         <div class="my-5" />
 
-        <div class="flex gap-2">
+        <div class="flex gap-2 max-sm:flex-col">
             <CreateRoomCard />
             <JoinRoomCard />
         </div>
