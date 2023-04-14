@@ -1,10 +1,13 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+
     // @ts-nocheck
 
     import { page } from "$app/stores";
     import { loading, loadingMessage } from "@/store";
     import sleep from "@/utils/sleep";
     import { IconPlus } from "@tabler/icons-svelte";
+    import { toasts } from "svelte-toasts";
 
     $: user = $page.data.user;
 
@@ -14,15 +17,54 @@
         password: "",
     };
 
-    async function handleSubmit(event: FormDataEvent) {
+    async function handleSubmit(event: any) {
         event.preventDefault();
         console.log(event);
 
         loading.set(true);
         loadingMessage.set("Creating Room");
 
-        await sleep(2000);
+        try {
+            const response = await fetch("/api/create-room", {
+                method: "post",
+                body: JSON.stringify({
+                    ...data,
+                }),
+            });
 
+            console.log(response);
+            // Handle Eror
+            if (!response.ok) {
+                toasts.add({
+                    title: "OOPS!",
+                    duration: 5000,
+                    type: "error",
+                    description: (await response.json()).message as string,
+                });
+
+                loading.set(false);
+                loadingMessage.set("");
+                return;
+            }
+
+            toasts.add({
+                title: "Hurey!",
+                duration: 5000,
+                type: "success",
+                description: "Room Created, redirecting...",
+            });
+            goto(`/r/${data.roomName}`);
+        } catch (e) {
+            toasts.add({
+                title: "OOPS!",
+                duration: 5000,
+                type: "error",
+                description: "Something Went Wrong",
+            });
+            console.error(e);
+        }
+
+        await sleep(1000);
         loading.set(false);
         loadingMessage.set("");
         return false;

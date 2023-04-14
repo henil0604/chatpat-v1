@@ -1,5 +1,6 @@
 import { redirect } from "@sveltejs/kit";
 
+export const ssr = false;
 
 function isProtectedRoute(url: string): boolean {
   const ProtectedRoutes = [

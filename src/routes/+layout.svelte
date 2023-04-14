@@ -2,6 +2,7 @@
     import { page } from "$app/stores";
     import "@/app.postcss";
     import { loading, loadingMessage } from "@/store";
+    import { ToastContainer, FlatToast } from "svelte-toasts";
 
     console.log(`LAYOUT PAGE STORE`, $page);
 </script>
@@ -19,4 +20,8 @@
         </div>
     </div>
 {/if}
+<ToastContainer placement="top-right" let:data>
+    <FlatToast {data} />
+    <!-- Provider template for your toasts -->
+</ToastContainer>
 <slot />
