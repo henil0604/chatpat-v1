@@ -33,7 +33,7 @@
             });
 
             console.log(response);
-            // Handle Eror
+            // Handle Error
             if (!response.ok) {
                 toasts.add({
                     title: "OOPS!",
@@ -48,7 +48,7 @@
             }
 
             toasts.add({
-                title: "Hurey!",
+                title: "ooooo!",
                 duration: 5000,
                 type: "success",
                 description: "Room Created, redirecting...",
@@ -154,7 +154,7 @@
 
     <label
         for="create-room-modal"
-        class="btn btn-white shadow-lg gap-3 h-fit px-5 py-5"
+        class="btn btn-white shadow-lg gap-3 h-fit px-5 py-5 min-w-[200px]"
     >
         <div class="w-full h-full flex-center flex-col gap-3">
             <IconPlus size={100} />

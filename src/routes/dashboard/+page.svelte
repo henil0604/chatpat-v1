@@ -2,6 +2,7 @@
     import { page } from "$app/stores";
     import AccountCard from "@/components/AccountCard.svelte";
     import CreateRoomCard from "@/components/CreateRoomCard.svelte";
+    import JoinRoomCard from "@/components/JoinRoomCard.svelte";
 
     $: user = $page.data.user;
 </script>
@@ -14,8 +15,9 @@
         <AccountCard />
         <div class="my-5" />
 
-        <div class="flex">
+        <div class="flex gap-2">
             <CreateRoomCard />
+            <JoinRoomCard />
         </div>
     </main>
 </div>
