@@ -16,9 +16,10 @@
         <div class="text-md italic max-sm:text-sm">{APP_TAGLINE}</div>
         <div class="my-6 max-sm:my-4" />
 
-        <a class="btn btn-dark" href="/preregister"
-            >Click Here to Pre-Register</a
+        <a class="btn btn-dark" href="/dashboard"
+            >Open Dashboard</a
         >
+
         <div class="my-6 max-sm:my-4" />
         <div class="flex gap-3">
             <a
