@@ -1,12 +1,13 @@
 <script>
     import { page } from "$app/stores";
+    import { signOut } from "@auth/sveltekit/client";
 
     $: user = $page.data.user;
 </script>
 
 <input type="checkbox" id="account-modal" class="modal-toggle" />
 <label for="account-modal" class="modal text-black cursor-pointer">
-    <div class="modal-box relative min-w-fit">
+    <div class="modal-box relative min-w-fit cursor-default">
         <label
             for="account-modal"
             class="btn btn-sm btn-circle absolute right-2 top-2">✕</label
@@ -29,6 +30,12 @@
                     <span class="font-bold">Email: </span>
                     <span class="">{user.email}</span>
                 </div>
+                <button
+                    class="btn btn-error w-fit mt-5"
+                    on:click={() => signOut()}
+                >
+                    Logout
+                </button>
             </div>
         </div>
     </div>
