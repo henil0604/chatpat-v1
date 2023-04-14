@@ -8,7 +8,10 @@
 <div>
     <input type="checkbox" id="account-modal" class="modal-toggle" />
     <label for="account-modal" class="modal text-black cursor-pointer">
-        <div class="modal-box relative min-w-fit max-w-full cursor-default">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div
+            class="modal-box relative max-w-fit max-sm:max-w-full cursor-default"
+        >
             <label
                 for="account-modal"
                 class="btn btn-sm btn-circle absolute right-4 top-4">✕</label

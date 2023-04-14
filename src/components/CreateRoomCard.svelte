@@ -73,6 +73,7 @@
 
 <div>
     <input type="checkbox" id="create-room-modal" class="modal-toggle" />
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <label for="create-room-modal" class="modal text-black cursor-pointer">
         <div class="modal-box relative min-w-fit cursor-default">
             <label

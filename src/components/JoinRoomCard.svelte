@@ -68,8 +68,11 @@
 
 <div>
     <input type="checkbox" id="join-room-modal" class="modal-toggle" />
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <label for="join-room-modal" class="modal text-black cursor-pointer">
-        <div class="modal-box relative min-w-fit cursor-default">
+        <div
+            class="modal-box relative min-w-fit cursor-default"
+        >
             <label
                 for="join-room-modal"
                 class="btn btn-sm btn-circle absolute right-4 top-4">✕</label
