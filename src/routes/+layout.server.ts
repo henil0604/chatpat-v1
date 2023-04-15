@@ -6,7 +6,7 @@ function isProtectedRoute(url: string): boolean {
   const ProtectedRoutes = [
     "/preregister",
     "/dashboard",
-    "/r/*"
+    // "/r/*"
   ]
 
   return ProtectedRoutes.some(route => {
