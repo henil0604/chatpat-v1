@@ -5,7 +5,8 @@ export const ssr = false;
 function isProtectedRoute(url: string): boolean {
   const ProtectedRoutes = [
     "/preregister",
-    "/dashboard"
+    "/dashboard",
+    "/r/*"
   ]
 
   return ProtectedRoutes.some(route => {

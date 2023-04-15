@@ -1,6 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
+import { hash } from "@/utils/crypto";
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 
@@ -45,7 +46,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         data: {
             name: data.roomName,
             visibility: data.visibility,
-            password: data.visibility === "private" ? data.password : null,
+            password: data.visibility === "private" ? hash(data.password) : null,
             owner: {
                 connect: {
                     email: user.email as string

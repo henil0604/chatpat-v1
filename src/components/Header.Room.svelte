@@ -2,6 +2,7 @@
     import { page } from "$app/stores";
 
     $: roomName = $page.params.roomName;
+    $: room = $page.data.room;
     $: user = $page.data.user;
 </script>
 

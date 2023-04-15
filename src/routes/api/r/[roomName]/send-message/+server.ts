@@ -1,0 +1,72 @@
+import { error, json } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
+import { prisma } from "@/lib/server/prisma";
+
+export const POST: RequestHandler = async ({ request, locals, params }) => {
+
+    let session = await locals.getSession()
+
+    if (!session?.user) {
+        throw error(401, "Unauthorized")
+    }
+    const user = session.user;
+    const roomName = params.roomName;
+
+    if (!roomName) {
+        throw error(400, "Room name not found in url")
+    }
+
+    let data: { message: string, createdAt: number, id: string };
+
+    try {
+        data = await request.json();
+    } catch {
+        throw error(400, "Bad Input");
+    }
+
+    if (!data.message) {
+        throw error(400, "message content not provided")
+    }
+    if (!data.createdAt) {
+        data.createdAt = Date.now()
+    }
+
+    if (data.id && (await prisma.chat.findFirst({ where: { id: data.id } }))) {
+        throw error(400, `Chat with id:"${data.id}" already exists`)
+    }
+
+    // TODO: Encryption
+
+    let message;
+    try {
+        message = await prisma.chat.create({
+            data: {
+                id: data.id ? undefined : data.id,
+                content: data.message,
+                createdAt: new Date(data.createdAt),
+                owner: {
+                    connect: {
+                        email: user.email as string
+                    }
+                },
+                room: {
+                    connect: {
+                        name: roomName
+                    }
+                }
+            }
+        })
+    } catch (e) {
+        console.error(e);
+        throw error(500, "Something went wrong")
+    };
+
+
+    return json({
+        message: "Message Sent",
+        code: "SENT",
+        data: {
+            ...message
+        }
+    });
+};

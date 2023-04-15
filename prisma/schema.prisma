@@ -46,6 +46,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Room          Room[]
+  Chat          Chat[]
 }
 
 model VerificationToken {
@@ -66,4 +67,16 @@ model Room {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   ownerId    String
+  Chat       Chat[]
+}
+
+model Chat {
+  id        String   @id @default(cuid()) @map("_id")
+  content   String
+  type      String?  @default("message")
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  createdAt DateTime @default(now())
 }

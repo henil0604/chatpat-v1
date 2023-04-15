@@ -15,11 +15,18 @@ export const handle = SvelteKitAuth({
             allowDangerousEmailAccountLinking: true,
         }),
         Google({
-          clientId: GOOGLE_ID,
-          clientSecret: GOOGLE_SECRET
+            clientId: GOOGLE_ID,
+            clientSecret: GOOGLE_SECRET
         })
     ],
     secret: AUTH_SECRET,
     adapter: PrismaAdapter(prisma),
-
+    callbacks: {
+        session: ({ session, user }) => {
+            if (session.user) {
+                session.user.id = user.id;
+            }
+            return session;
+        }
+    }
 })

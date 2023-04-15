@@ -1,12 +1,48 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { addChat, chatsStore, updateChat } from "@/store";
+    import { encrypt } from "@/utils/crypto";
+    import randomString from "@/utils/randomString";
     import { IconSend } from "@tabler/icons-svelte";
 
     $: roomName = $page.params.roomName;
+    $: room = $page.data.room;
     $: user = $page.data.user;
 
-    async function handleSend(event: Event) {
-        event.preventDefault();
+    $: message = "";
+
+    async function handleSend() {
+        if (message === "" || message.trim() === "") return false;
+        const msg = message;
+        message = "";
+
+        let data = {
+            id: randomString(21),
+            message: msg,
+            createdAt: Date.now(),
+        };
+
+        addChat({
+            id: data.id,
+            createdAt: new Date(data.createdAt),
+            owner: user,
+            ownerId: user.id,
+            room: room,
+            roomId: room.id,
+            content: msg,
+            atClient: true,
+            type: "message",
+        });
+
+        try {
+            const response = await fetch(`/api/r/${roomName}/send-message`, {
+                method: "post",
+                body: JSON.stringify(data),
+            });
+            updateChat(data.id, { atClient: false });
+        } catch (e) {}
+
+        return true;
     }
 </script>
 
@@ -15,8 +51,12 @@
         type="text"
         class="input rounded-none input-bordered w-full"
         placeholder="Type..."
+        bind:value={message}
+        on:keydown={(e) => {
+            if (e.keyCode === 13) handleSend();
+        }}
     />
-    <button class="btn rounded-none btn-info" on:click={handleSend}>
+    <button class="btn rounded-none" on:click={handleSend}>
         <IconSend />
     </button>
 </div>

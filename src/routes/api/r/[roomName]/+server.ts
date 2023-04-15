@@ -2,7 +2,8 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 
-export const GET: RequestHandler = async ({ request, locals, params }) => {
+
+export const GET: RequestHandler = async ({ request, locals, params, url }) => {
 
     const roomName = params.roomName;
 
@@ -11,7 +12,16 @@ export const GET: RequestHandler = async ({ request, locals, params }) => {
             name: roomName
         },
         include: {
-            owner: true
+            owner: true,
+            Chat: {
+                orderBy: {
+                    createdAt: "asc"
+                },
+                // take: -30,
+                include: {
+                    owner: true
+                }
+            }
         }
     })
 
