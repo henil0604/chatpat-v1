@@ -13,10 +13,16 @@
     onMount(() => {
         roomStore.set(room);
         rawChatsStore.set(room.Chat);
+        // Quick hack for scroll to end
+        setTimeout(() => {
+            rawChatsStore.set([...room.Chat, { owner: {} }]);
+            rawChatsStore.set([...room.Chat]);
+        }, 10);
     });
 
     onDestroy(() => {
         roomStore.set(null);
+        rawChatsStore.set([]);
     });
 </script>
 

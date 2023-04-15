@@ -12,6 +12,9 @@
 
     chatsStore.subscribe((chats) => {
         console.log("chats:", chats);
+        if (bodyDiv) {
+            bodyDiv.scrollTop = bodyDiv.scrollHeight;
+        }
     });
     rawChatsStore.subscribe((chats) => {
         console.log("raw:", chats);
