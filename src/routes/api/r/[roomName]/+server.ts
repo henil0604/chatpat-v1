@@ -2,7 +2,6 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 
-
 export const GET: RequestHandler = async ({ request, locals, params, url }) => {
 
     const roomName = params.roomName;

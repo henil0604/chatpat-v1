@@ -35,7 +35,16 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
     if (data.id && (await prisma.chat.findFirst({ where: { id: data.id } }))) {
         throw error(400, `Chat with id:"${data.id}" already exists`)
     }
-    console.log(data)
+
+    const room = await prisma.room.findFirst({
+        where: {
+            name: roomName
+        }
+    })
+
+    if (!room) {
+        throw error(404, "Room not found");
+    }
 
     // TODO: Encryption
 
@@ -66,9 +75,10 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
     // Pusher Event trigger
     try {
-        console.log(message)
         const push = await pusher.trigger(roomName, "new-chat", {
-            id: message.id
+            ...message,
+            owner: user,
+            room: room
         })
     } catch (e) {
         console.error(e);

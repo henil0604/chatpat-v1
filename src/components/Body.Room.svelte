@@ -40,14 +40,7 @@
                 return;
             }
 
-            // fetch chat
-            const response = await fetch(`/api/r/${roomName}/${data.id}`);
-
-            if (response.status === 404) {
-                console.error(response, data);
-            }
-
-            const chat: chat = (await response.json()).data;
+            const chat: chat = data;
 
             if (getChat(chat.id).chat) {
                 return;
