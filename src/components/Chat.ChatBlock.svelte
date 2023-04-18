@@ -28,3 +28,9 @@
         {new Date(chat.createdAt).toLocaleTimeString()}
     </div>
 </div>
+
+<style scoped>
+    .chat:hover .chat-time {
+        display: block;
+    }
+</style>
