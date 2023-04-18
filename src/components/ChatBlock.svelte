@@ -40,9 +40,3 @@
         {/each}
     </div>
 </div>
-
-<style scoped>
-    .chat:hover .chat-time {
-        display: block;
-    }
-</style>

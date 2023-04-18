@@ -45,3 +45,6 @@ export function updateChat(id: string, data: any) {
 
 // Channel
 export const pusherChannel = writable<Channel | null>(null)
+
+export const chatQueue = writable<string[]>([]);
+export const sendingChat = writable<boolean>(false);

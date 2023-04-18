@@ -20,10 +20,10 @@
     let bodyDiv: HTMLDivElement | null = null;
 
     chatsStore.subscribe((chats) => {
-        console.log("chats:", chats);
+        // console.log("chats:", chats);
     });
     rawChatsStore.subscribe((chats) => {
-        console.log("raw:", chats);
+        // console.log("raw:", chats);
     });
 
     // Channel
@@ -34,7 +34,7 @@
 
         var channel = pusher.subscribe(`${roomName}`);
         channel.bind("new-chat", async (data: any) => {
-            console.log("data?", data);
+            // console.log("data?", data);
             if (!data.id) {
                 console.error(data);
                 return;
