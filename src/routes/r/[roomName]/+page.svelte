@@ -3,14 +3,23 @@
     import Body from "@/components/Body.Room.svelte";
     import Footer from "@/components/Footer.Room.svelte";
     import Header from "@/components/Header.Room.svelte";
-    import { chatsStore, rawChatsStore, roomStore } from "@/store";
+    import {
+        chatsStore,
+        pusherChannel,
+        rawChatsStore,
+        roomStore,
+    } from "@/store";
     import { onDestroy, onMount } from "svelte";
 
-    $: roomName = $page.params.roomName;
-    $: room = $page.data.room;
-    $: user = $page.data.user;
+    const roomName = $page.params.roomName;
+    const room = $page.data.room;
+    const user = $page.data.user;
 
     onMount(() => {
+        room.Chat[room.Chat.length - 1] = {
+            ...room.Chat[room.Chat.length - 1],
+            scroll: true,
+        };
         roomStore.set(room);
         rawChatsStore.set(room.Chat);
         // Quick hack for scroll to end
@@ -23,6 +32,7 @@
     onDestroy(() => {
         roomStore.set(null);
         rawChatsStore.set([]);
+        pusherChannel.set(null);
     });
 </script>
 

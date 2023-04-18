@@ -2,6 +2,8 @@
     import { chatsStore, type chat } from "@/store";
     import type { block } from "@/utils/transformChats";
     import type { Chat, Room, User } from "@prisma/client";
+    import { onMount } from "svelte";
+    import ChatComponent from "@/components/Chat.ChatBlock.svelte";
 
     export let block: block;
     export let index: number;
@@ -31,21 +33,7 @@
                 <div id="content" class={`w-full text-[14px]`}>
                     {#each section.chats as chat, index}
                         <!-- CHAT -->
-                        {@const atClient = chat.atClient}
-                        <div
-                            class={`chat items-end flex py-1 px-1 justify-between rounded transition w-full hover:bg-gray-100 ${
-                                atClient ? "text-gray-400" : ""
-                            } ${index > 0 ? "pt-0" : ""}`}
-                        >
-                            <p id="content order-first">
-                                {chat.content}
-                            </p>
-                            <div
-                                class="chat-time text-gray-600 text-xs italic hidden order-last"
-                            >
-                                {new Date(chat.createdAt).toLocaleTimeString()}
-                            </div>
-                        </div>
+                        <ChatComponent {chat} {index} />
                     {/each}
                 </div>
             </div>

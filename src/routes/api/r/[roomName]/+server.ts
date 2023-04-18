@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ request, locals, params, url }) => {
                 orderBy: {
                     createdAt: "asc"
                 },
-                // take: -30,
+                take: -20,
                 include: {
                     owner: true
                 }

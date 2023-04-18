@@ -1,6 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
+import pusher from "@/lib/server/pusher";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
@@ -34,6 +35,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
     if (data.id && (await prisma.chat.findFirst({ where: { id: data.id } }))) {
         throw error(400, `Chat with id:"${data.id}" already exists`)
     }
+    console.log(data)
 
     // TODO: Encryption
 
@@ -41,7 +43,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
     try {
         message = await prisma.chat.create({
             data: {
-                id: data.id ? undefined : data.id,
+                id: data.id || undefined,
                 content: data.message,
                 createdAt: new Date(data.createdAt),
                 owner: {
@@ -60,6 +62,17 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
         console.error(e);
         throw error(500, "Something went wrong")
     };
+
+
+    // Pusher Event trigger
+    try {
+        console.log(message)
+        const push = await pusher.trigger(roomName, "new-chat", {
+            id: message.id
+        })
+    } catch (e) {
+        console.error(e);
+    }
 
 
     return json({

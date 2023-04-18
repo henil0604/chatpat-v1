@@ -1,5 +1,6 @@
-import { error } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { prisma } from "@/lib/server/prisma";
 
 export const GET: RequestHandler = async ({ locals, params }) => {
 
@@ -12,7 +13,26 @@ export const GET: RequestHandler = async ({ locals, params }) => {
     const roomName = params.roomName;
     const chatId = params.id;
 
+    const chat = await prisma.chat.findFirst({
+        where: {
+            id: chatId
+        },
+        include: {
+            owner: true,
+            room: true
+        }
+    })
 
+    if (!chat) {
+        throw error(404, "Chat Not found")
+    }
 
-    return new Response();
+    return json({
+        message: 'Chat found',
+        code: 'FOUND',
+        data: {
+            ...chat
+        }
+    })
+
 };

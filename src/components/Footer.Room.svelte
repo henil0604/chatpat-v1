@@ -5,9 +5,9 @@
     import randomString from "@/utils/randomString";
     import { IconSend } from "@tabler/icons-svelte";
 
-    $: roomName = $page.params.roomName;
-    $: room = $page.data.room;
-    $: user = $page.data.user;
+    const roomName = $page.params.roomName;
+    const room = $page.data.room;
+    const user = $page.data.user;
 
     $: message = "";
 
@@ -32,6 +32,7 @@
             content: msg,
             atClient: true,
             type: "message",
+            scroll: true
         });
 
         try {

@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/server/prisma.js';
 
-export const ssr = false;
+// export const ssr = false;
+// export const prerender = false;
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params, locals, url, fetch }) {

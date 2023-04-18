@@ -1,13 +1,14 @@
 import type { Chat, Room, User } from '@prisma/client';
 import { writable, get } from 'svelte/store';
 import transformChats, { type block } from '@/utils/transformChats';
+import type { Channel } from 'pusher-js';
 
 export const loading = writable<boolean>(false);
 export const loadingMessage = writable<string>("");
 
 export const roomStore = writable<Room | null>(null)
 
-export type chat = Chat & { room: Room, owner: User, atClient?: boolean };
+export type chat = Chat & { room: Room, owner: User, atClient?: boolean, scroll?: boolean };
 
 export const chatsStore = writable<block[]>([]);
 export const rawChatsStore = writable<chat[]>([]);
@@ -41,3 +42,6 @@ export function updateChat(id: string, data: any) {
         return chats;
     })
 }
+
+// Channel
+export const pusherChannel = writable<Channel | null>(null)
