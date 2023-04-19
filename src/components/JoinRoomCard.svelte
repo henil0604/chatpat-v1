@@ -48,7 +48,7 @@
                 type: "success",
                 description: "Room Found, redirecting...",
             });
-            goto(`/r/${data.roomName}`);
+            await goto(`/r/${data.roomName}`);
         } catch (e) {
             toasts.add({
                 title: "OOPS!",
