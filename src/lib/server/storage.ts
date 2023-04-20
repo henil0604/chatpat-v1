@@ -1,8 +1,8 @@
 import type { Room } from '@prisma/client';
 import storage from 'node-persist';
 
-await storage.init();
 await storage.clear()
+await storage.init();
 
 export async function getStoredRoom(roomName: string) {
     return await storage.getItem(getRoomKey(roomName));
