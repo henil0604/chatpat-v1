@@ -33,8 +33,11 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 	if (!data.createdAt) {
 		data.createdAt = Date.now()
 	}
+	if (!data.id) {
+		throw error(400, "id is required")
+	}
 
-	if (data.id && (await prisma.chat.findFirst({ where: { id: data.id } }))) {
+	if (await prisma.chat.findFirst({ where: { id: data.id } })) {
 		throw error(400, `Chat with id:"${data.id}" already exists`)
 	}
 
@@ -58,48 +61,52 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	// TODO: Encryption
 
-	let message;
-	try {
-		message = await prisma.chat.create({
-			data: {
-				id: data.id || undefined,
-				content: data.message,
-				createdAt: new Date(data.createdAt),
-				owner: {
-					connect: {
-						email: user.email as string
-					}
-				},
-				room: {
-					connect: {
-						name: roomName
-					}
-				}
-			}
-		})
-	} catch (e) {
-		console.error(e);
-		throw error(500, "Something went wrong")
-	};
-
-
 	// Pusher Event trigger
 	try {
 		const push = await pusher.trigger(roomName, "new-chat", {
-			...message,
+			id: data.id,
+			content: data.message,
+			createdAt: new Date(data.createdAt),
 			owner: user,
-			room: room
+			room: room,
+			ownerId: user.id as string,
+			roomId: room.id
 		})
 	} catch (e) {
 		console.error(e);
 	}
 
+	let message;
+
+	prisma.chat.create({
+		data: {
+			id: data.id,
+			content: data.message,
+			createdAt: new Date(data.createdAt),
+			owner: {
+				connect: {
+					email: user.email as string
+				}
+			},
+			room: {
+				connect: {
+					name: roomName
+				}
+			}
+		}
+	}).catch(console.error).then((e) => message = e)
 
 	return json({
 		message: "Message Sent",
 		code: "SENT",
 		data: {
-			...message
+			id: data.id,
+			content: data.message,
+			createdAt: new Date(data.createdAt),
+			owner: user,
+			room: room,
+			ownerId: user.id as string,
+			roomId: room.id
 		}
 	});
 };

@@ -46,6 +46,10 @@
                 return;
             }
 
+            console.log(
+                chat.id,
+                Date.now() - new Date(chat.createdAt).getTime()
+            );
             addChat({
                 ...chat,
                 scroll: true,
