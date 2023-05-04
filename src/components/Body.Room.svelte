@@ -42,14 +42,15 @@
 
             const chat: chat = data;
 
-            if (getChat(chat.id).chat) {
-                return;
-            }
-
             console.log(
                 chat.id,
                 Date.now() - new Date(chat.createdAt).getTime()
             );
+
+            if (getChat(chat.id).chat) {
+                return;
+            }
+
             addChat({
                 ...chat,
                 scroll: true,

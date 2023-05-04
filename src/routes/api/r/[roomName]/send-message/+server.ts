@@ -49,17 +49,21 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	// TODO: Extract function for storing message
 
-	const room = await cachify<Room>(
-		getRoomKey(roomName),
-		() => (prisma.room.findFirst({
-			where: {
-				name: roomName
-			}
-		})),
-		{ timeout: 1000 * 60 * 1 }  // 1 minute cache
-	)
+	// const room = await cachify<Room>(
+	// 	getRoomKey(roomName),
+	// 	() => (prisma.room.findFirst({
+	// 		where: {
+	// 			name: roomName
+	// 		}
+	// 	})),
+	// 	{ timeout: 1000 * 60 * 1 }  // 1 minute cache
+	// )
 
-	console.log(room);
+	const room = await prisma.room.findFirst({
+		where: {
+			name: roomName
+		}
+	})
 
 	if (!room) {
 		throw error(404, "Room not found");
