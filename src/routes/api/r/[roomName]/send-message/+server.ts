@@ -59,6 +59,8 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 		{ timeout: 1000 * 60 * 1 }  // 1 minute cache
 	)
 
+	console.log(room);
+
 	if (!room) {
 		throw error(404, "Room not found");
 	}

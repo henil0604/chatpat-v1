@@ -19,7 +19,7 @@ export async function cachify<T>(key: string, fallback: any, options?: Partial<C
     let returnData: T | null = null;
     options = options || {}
     if (storedData) {
-        returnData = storedData.data;
+        returnData = storedData;
     }
     if (options.force || returnData === null) {
         const newData = await fallback();
