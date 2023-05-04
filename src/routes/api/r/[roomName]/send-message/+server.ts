@@ -2,7 +2,7 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import pusher from "@/lib/server/pusher";
-import { cachify, getRoomKey, getStoredRoom } from "@/lib/server/storage";
+import { cachify, getRoomKey } from "@/lib/server/storage";
 import type { Room } from "@prisma/client";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
@@ -49,11 +49,15 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	// TODO: Extract function for storing message
 
-	const room = await cachify<Room>(getRoomKey(roomName), () => (prisma.room.findFirst({
-		where: {
-			name: roomName
-		}
-	})), { timeout: 1000 * 60 }) // 60 second cache
+	const room = await cachify<Room>(
+		getRoomKey(roomName),
+		() => (prisma.room.findFirst({
+			where: {
+				name: roomName
+			}
+		})),
+		{ timeout: 1000 * 60 * 1 }  // 1 minute cache
+	)
 
 	if (!room) {
 		throw error(404, "Room not found");

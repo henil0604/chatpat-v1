@@ -27,6 +27,12 @@ export const handle = SvelteKitAuth({
                 session.user.id = user.id;
             }
             return session;
+        },
+
+    },
+    events: {
+        createUser: ({ user }) => {
+
         }
     }
 })

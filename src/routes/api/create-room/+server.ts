@@ -2,7 +2,6 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import { hash } from "@/utils/crypto";
-import { cachify, getRoomKey } from "@/lib/server/storage";
 import type { Room } from "@prisma/client";
 
 export const POST: RequestHandler = async ({ request, locals }) => {
@@ -34,11 +33,11 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         throw error(400, `"password" is required if room visibility is "private"`)
     }
 
-    let room = await cachify<Room>(getRoomKey(data.roomName), () => (prisma.room.findFirst({
+    let room = await prisma.room.findFirst({
         where: {
             name: data.roomName
         }
-    })))
+    })
 
     if (room) {
         throw error(400, `room "${data.roomName}" already exists`)
