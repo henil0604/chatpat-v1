@@ -7,6 +7,7 @@ export const GET: RequestHandler = async ({ request, locals, params, url }) => {
 
     const roomName = getRoomNameOrThrow(params);
 
+    // getting room
     let room = await prisma.room.findFirst({
         where: {
             name: roomName
@@ -17,7 +18,7 @@ export const GET: RequestHandler = async ({ request, locals, params, url }) => {
                 orderBy: {
                     createdAt: "asc"
                 },
-                take: -20,
+                // take: -20,
                 include: {
                     owner: true
                 }

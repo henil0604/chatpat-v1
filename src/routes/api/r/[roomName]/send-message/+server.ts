@@ -2,60 +2,41 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import pusher from "@/lib/server/pusher";
-import { cachify, getRoomKey } from "@/lib/server/storage";
-import type { Room } from "@prisma/client";
 import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
 import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
+import { z } from "zod";
+import validateInput from "@/utils/validateInput";
+import getChatById from "@/utils/getChatById";
+import getRoomOrThrowNotExist from "@/utils/getRoomOrThrowNotExist";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	// Validating Session
 	const user = await validateSessionAndGetUserOrThrow(locals.getSession);
+	// getting roomname or throwing error if does not exist
 	const roomName = getRoomNameOrThrow(params);
 
-	let data: { message: string, createdAt: number, id: string, batch: boolean };
+	// schema for request data
+	let schema = z.object({
+		message: z.string({
+			required_error: 'message content not provided'
+		}),
+		createdAt: z.number().optional().default(Date.now()), // default to server time
+		id: z.string({
+			required_error: 'id is required'
+		}),
+	})
 
-	try {
-		data = await request.json();
-	} catch {
-		throw error(400, "Bad Input");
-	}
+	// Getting data from request
+	const data = await validateInput<z.infer<typeof schema>>(schema, request.json())
 
-	if (!data.message) {
-		throw error(400, "message content not provided")
-	}
-	if (!data.createdAt) {
-		data.createdAt = Date.now()
-	}
-	if (!data.id) {
-		throw error(400, "id is required")
-	}
-
-	if (await prisma.chat.findFirst({ where: { id: data.id } })) {
+	// check if chat already exist with `id` provided by client
+	if (await getChatById(data.id)) {
 		throw error(400, `Chat with id:"${data.id}" already exists`)
 	}
 
-	data.batch = data.batch || false
-
-	if (data.batch && !Array.isArray(data.message)) {
-		throw error(400, "While sending batch messages, \"message\" should be array");
-	}
-
-	// TODO: Extract function for storing message
-
-	const room = await cachify<Room>(
-		getRoomKey(roomName),
-		() => (prisma.room.findFirst({
-			where: {
-				name: roomName
-			}
-		})),
-		{ timeout: 1000 * 60 * 1 }  // 1 minute cache
-	)
-
-	if (!room) {
-		throw error(404, "Room not found");
-	}
+	// Getting room
+	const room = await getRoomOrThrowNotExist(roomName, true);
 
 	// TODO: Encryption
 
@@ -76,6 +57,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	let message;
 
+	// creating chat in database but not waiting for it to finish because it will take more time to complete the request and not needed to be waited
 	prisma.chat.create({
 		data: {
 			id: data.id,
@@ -92,7 +74,9 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 				}
 			}
 		}
-	}).catch(console.error).then((e) => message = e)
+	}).catch(console.error).then((e) => () => {
+		// TODO: send warning to all users that this message was not stored in database
+	})
 
 	return json({
 		message: "Message Sent",

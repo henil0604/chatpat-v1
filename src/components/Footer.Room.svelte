@@ -40,7 +40,7 @@
 
             chatQueue.set(queue);
         }
-    }, 500);
+    }, 100);
 
     async function send(data: any) {
         sendingChat.set(true);

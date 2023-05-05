@@ -14,11 +14,13 @@ interface CachifyOptions {
 }
 export async function cachify<T>(key: string, fallback: any, options?: Partial<CachifyOptions>): Promise<T> {
     const startTime = Date.now();
-    const storedData: any = await kv.get(key);
     let returnData: T | null = null;
-    options = options || {}
-    if (storedData) {
-        returnData = storedData;
+    if (!options?.force) {
+        const storedData: any = await kv.get(key);
+        options = options || {}
+        if (storedData) {
+            returnData = storedData;
+        }
     }
     if (options.force || returnData === null) {
         const newData = await fallback();
