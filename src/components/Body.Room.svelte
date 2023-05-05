@@ -69,6 +69,6 @@
     class="grow-1 w-full h-full pt-5 pb-2 overflow-y-scroll"
 >
     {#each $chatsStore as block, index}
-        <ChatBlock {block} {index} />
+        <ChatBlock {block} />
     {/each}
 </div>

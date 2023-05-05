@@ -2,7 +2,6 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import { hash } from "@/utils/crypto";
-import type { Room } from "@prisma/client";
 import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
 import validateInput from "@/utils/validateInput";
 import { z } from "zod";
@@ -49,6 +48,24 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             owner: {
                 connect: {
                     email: user.email as string
+                }
+            }
+        }
+    })
+
+    // After event
+    await prisma.chat.create({
+        data: {
+            room: {
+                connect: {
+                    name: data.roomName
+                }
+            },
+            content: `${user.name} created this room`,
+            type: 'label',
+            owner: {
+                connect: {
+                    id: user.id as string
                 }
             }
         }

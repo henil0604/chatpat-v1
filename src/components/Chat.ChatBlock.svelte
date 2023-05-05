@@ -12,6 +12,8 @@
             div.scrollIntoView();
         }
     });
+
+    console.log(chat);
 </script>
 
 <div
@@ -20,7 +22,11 @@
         index > 0 ? "pt-0" : ""
     }`}
 >
-    <p id="content order-first">
+    <p
+        class={`content order-first ${
+            chat.type === "label" ? "italic font-semibold" : ""
+        }`}
+    >
         {chat.content}
     </p>
     <div class="chat-time text-gray-600 text-xs italic hidden order-last">

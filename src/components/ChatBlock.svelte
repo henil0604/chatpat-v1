@@ -1,12 +1,8 @@
 <script lang="ts">
-    import { chatsStore, type chat } from "@/store";
     import type { block } from "@/utils/transformChats";
-    import type { Chat, Room, User } from "@prisma/client";
-    import { onMount } from "svelte";
     import ChatComponent from "@/components/Chat.ChatBlock.svelte";
 
     export let block: block;
-    export let index: number;
 </script>
 
 <div class="flex flex-col w-full h-fit my-2">
