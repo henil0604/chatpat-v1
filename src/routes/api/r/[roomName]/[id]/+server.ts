@@ -4,6 +4,9 @@ import { prisma } from "@/lib/server/prisma";
 import { cachify, getChatKey } from "@/lib/server/storage";
 import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
 import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
+import type { Chat } from "@prisma/client";
+import { decrypt } from "@/utils/crypto";
+import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const GET: RequestHandler = async ({ locals, params }) => {
 
@@ -12,7 +15,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 
     const chatId = params.id;
 
-    const chat = await cachify(getChatKey(chatId), () => (prisma.chat.findFirst({
+    const chat = await cachify<Chat>(getChatKey(chatId), () => (prisma.chat.findFirst({
         where: {
             id: chatId
         },
@@ -25,6 +28,8 @@ export const GET: RequestHandler = async ({ locals, params }) => {
     if (!chat) {
         throw error(404, "Chat Not found")
     }
+
+    chat.content = decrypt(chat.content, MESSAGE_STORE_SECRET)
 
     return json({
         message: 'Chat found',

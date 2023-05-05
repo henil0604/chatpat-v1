@@ -9,6 +9,8 @@ import validateInput from "@/utils/validateInput";
 import getChatById from "@/utils/getChatById";
 import getRoomOrThrowNotExist from "@/utils/getRoomOrThrowNotExist";
 import log from "@/utils/log";
+import { encrypt } from "@/utils/crypto";
+import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
@@ -62,7 +64,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 		message = await prisma.chat.create({
 			data: {
 				id: data.id,
-				content: data.message,
+				content: encrypt(data.message, MESSAGE_STORE_SECRET),
 				createdAt: new Date(data.createdAt),
 				owner: {
 					connect: {

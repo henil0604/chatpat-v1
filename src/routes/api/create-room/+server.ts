@@ -1,11 +1,12 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
-import { hash } from "@/utils/crypto";
+import { encrypt, hash } from "@/utils/crypto";
 import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
 import validateInput from "@/utils/validateInput";
 import { z } from "zod";
 import getRoomByName from "@/utils/getRoomByName";
+import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 
@@ -61,7 +62,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
                     name: data.roomName
                 }
             },
-            content: `${user.name} created this room`,
+            content: encrypt(`${user.name} created this room`, MESSAGE_STORE_SECRET),
             type: 'label',
             owner: {
                 connect: {

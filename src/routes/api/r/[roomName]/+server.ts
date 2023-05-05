@@ -2,6 +2,8 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
+import { decrypt } from "@/utils/crypto";
+import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const GET: RequestHandler = async ({ request, locals, params, url }) => {
 
@@ -29,6 +31,11 @@ export const GET: RequestHandler = async ({ request, locals, params, url }) => {
     if (!room) {
         throw error(404, "Room Not Found")
     }
+
+    room.Chat = room.Chat.map(chat => {
+        chat.content = decrypt(chat.content, MESSAGE_STORE_SECRET)
+        return chat;
+    })
 
     return json({
         message: "Room Found",
