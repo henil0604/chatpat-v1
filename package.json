@@ -34,6 +34,7 @@
 		"@tabler/icons-svelte": "^2.13.1",
 		"@types/crypto-js": "^4.1.1",
 		"@vercel/kv": "^0.1.1",
+		"chalk": "^5.2.0",
 		"crypto-js": "^4.1.1",
 		"daisyui": "^2.51.5",
 		"pusher": "^5.1.2",

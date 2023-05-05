@@ -1,10 +1,11 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
+import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
 
 export const GET: RequestHandler = async ({ request, locals, params, url }) => {
 
-    const roomName = params.roomName;
+    const roomName = getRoomNameOrThrow(params);
 
     let room = await prisma.room.findFirst({
         where: {

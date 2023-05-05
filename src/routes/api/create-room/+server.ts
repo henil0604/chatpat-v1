@@ -3,15 +3,11 @@ import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import { hash } from "@/utils/crypto";
 import type { Room } from "@prisma/client";
+import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 
-    let session = await locals.getSession()
-
-    if (!session?.user) {
-        throw error(401, "Unauthorized")
-    }
-    const user = session.user;
+    const user = await validateSessionAndGetUserOrThrow(locals.getSession);
 
     let data: { roomName: string, visibility: string, password: string };;
 

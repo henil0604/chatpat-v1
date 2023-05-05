@@ -2,16 +2,14 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { prisma } from "@/lib/server/prisma";
 import { cachify, getChatKey } from "@/lib/server/storage";
+import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
+import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
 
 export const GET: RequestHandler = async ({ locals, params }) => {
 
-    let session = await locals.getSession()
+    const user = await validateSessionAndGetUserOrThrow(locals.getSession);
+    const roomName = getRoomNameOrThrow(params);
 
-    if (!session?.user) {
-        throw error(401, "Unauthorized")
-    }
-    const user = session.user;
-    const roomName = params.roomName;
     const chatId = params.id;
 
     const chat = await cachify(getChatKey(chatId), () => (prisma.chat.findFirst({

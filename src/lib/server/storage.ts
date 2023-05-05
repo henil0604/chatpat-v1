@@ -1,4 +1,4 @@
-import type { Room } from '@prisma/client';
+import log from "@/utils/log";
 import kv from "@vercel/kv";
 
 export function getRoomKey(roomName: string) {
@@ -13,8 +13,7 @@ interface CachifyOptions {
     force: boolean
 }
 export async function cachify<T>(key: string, fallback: any, options?: Partial<CachifyOptions>): Promise<T> {
-    let timeKey = `cachify: ${key}`
-    console.time(timeKey)
+    const startTime = Date.now();
     const storedData: any = await kv.get(key);
     let returnData: T | null = null;
     options = options || {}
@@ -26,6 +25,7 @@ export async function cachify<T>(key: string, fallback: any, options?: Partial<C
         await kv.set(key, newData, { px: options.timeout || -1 });
         returnData = newData;
     }
-    console.timeEnd(timeKey)
+    const endTime = Date.now();
+    log(`[cachify]`, `${key} ${endTime - startTime}ms`, 'info')
     return returnData as T;
 }

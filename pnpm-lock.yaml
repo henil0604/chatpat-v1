@@ -22,6 +22,9 @@ dependencies:
   '@vercel/kv':
     specifier: ^0.1.1
     version: 0.1.1
+  chalk:
+    specifier: ^5.2.0
+    version: 5.2.0
   crypto-js:
     specifier: ^4.1.1
     version: 4.1.1
@@ -676,6 +679,11 @@ packages:
 
   /caniuse-lite@1.0.30001473:
     resolution: {integrity: sha512-ewDad7+D2vlyy+E4UJuVfiBsU69IL+8oVmTuZnH5Q6CIUbxNfI50uVpRHbUPDD6SUaN2o0Lh4DhTrvLG/Tn1yg==}
+
+  /chalk@5.2.0:
+    resolution: {integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: false
 
   /chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}

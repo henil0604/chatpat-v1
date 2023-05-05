@@ -4,20 +4,14 @@ import { prisma } from "@/lib/server/prisma";
 import pusher from "@/lib/server/pusher";
 import { cachify, getRoomKey } from "@/lib/server/storage";
 import type { Room } from "@prisma/client";
+import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
+import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
-	let session = await locals.getSession()
-
-	if (!session?.user) {
-		throw error(401, "Unauthorized")
-	}
-	const user = session.user;
-	const roomName = params.roomName;
-
-	if (!roomName) {
-		throw error(400, "Room name not found in url")
-	}
+	// Validating Session
+	const user = await validateSessionAndGetUserOrThrow(locals.getSession);
+	const roomName = getRoomNameOrThrow(params);
 
 	let data: { message: string, createdAt: number, id: string, batch: boolean };
 
@@ -67,7 +61,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	// Pusher Event trigger
 	try {
-		const push = await pusher.trigger(roomName, "new-chat", {
+		const push = pusher.trigger(roomName, "new-chat", {
 			id: data.id,
 			content: data.message,
 			createdAt: new Date(data.createdAt),
