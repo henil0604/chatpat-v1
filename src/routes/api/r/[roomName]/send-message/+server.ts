@@ -42,7 +42,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 
 	// Pusher Event trigger
 	try {
-		const push = pusher.trigger(roomName, "new-chat", {
+		const push = await pusher.trigger(roomName, "new-chat", {
 			id: data.id,
 			content: data.message,
 			createdAt: new Date(data.createdAt),
