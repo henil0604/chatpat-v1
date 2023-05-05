@@ -8,6 +8,7 @@ import { z } from "zod";
 import validateInput from "@/utils/validateInput";
 import getChatById from "@/utils/getChatById";
 import getRoomOrThrowNotExist from "@/utils/getRoomOrThrowNotExist";
+import log from "@/utils/log";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
@@ -55,40 +56,37 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 		console.error(e);
 	}
 
+	// creating chat in database
 	let message;
-
-	// creating chat in database but not waiting for it to finish because it will take more time to complete the request and not needed to be waited
-	prisma.chat.create({
-		data: {
-			id: data.id,
-			content: data.message,
-			createdAt: new Date(data.createdAt),
-			owner: {
-				connect: {
-					email: user.email as string
-				}
-			},
-			room: {
-				connect: {
-					name: roomName
+	try {
+		message = await prisma.chat.create({
+			data: {
+				id: data.id,
+				content: data.message,
+				createdAt: new Date(data.createdAt),
+				owner: {
+					connect: {
+						email: user.email as string
+					}
+				},
+				room: {
+					connect: {
+						name: roomName
+					}
 				}
 			}
-		}
-	}).catch(console.error).then((e) => () => {
+		})
+	} catch (error) {
+		log(`[send-message] [store-chat]`, error, 'error')
+		console.error(error);
 		// TODO: send warning to all users that this message was not stored in database
-	})
+	}
 
 	return json({
 		message: "Message Sent",
 		code: "SENT",
 		data: {
-			id: data.id,
-			content: data.message,
-			createdAt: new Date(data.createdAt),
-			owner: user,
-			room: room,
-			ownerId: user.id as string,
-			roomId: room.id
+			...message
 		}
 	});
 };
