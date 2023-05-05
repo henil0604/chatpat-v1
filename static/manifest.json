@@ -1,0 +1,8 @@
+{
+    "name": "ChatPat - Flavour of Privacy",
+    "short_name": "ChatPat",
+    "start_url": "/dashboard",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff"
+}
