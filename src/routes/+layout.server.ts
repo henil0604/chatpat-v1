@@ -2,7 +2,8 @@ import { redirect } from "@sveltejs/kit";
 
 function isProtectedRoute(url: string): boolean {
     const ProtectedRoutes = [
-        "/preregister"
+        '/dashboard',
+        "/dashboard/*"
     ]
 
     return ProtectedRoutes.some(route => {
