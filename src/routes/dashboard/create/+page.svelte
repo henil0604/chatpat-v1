@@ -52,7 +52,7 @@
 </script>
 
 <div class="container flex-col w-full flex-center p-4 max-sm:px-2">
-    <div class="card min-w-[500px] flex-center flex-col p-4">
+    <div class="card min-w-[500px] max-md:min-w-full flex-center flex-col p-4">
         <div class="text-lg font-bold">Create Room</div>
 
         <hr class="my-3 w-full" />
