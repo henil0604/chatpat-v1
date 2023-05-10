@@ -1,1 +1,3 @@
-import { writable } from 'svelte/store';
+import { persisted } from 'svelte-local-storage-store'
+
+export const darkMode = persisted<boolean>("chatpatDarkMode", true)

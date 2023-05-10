@@ -16,7 +16,7 @@
 </script>
 
 <div
-    class="card variant-filled-secondary min-w-[200px] p-4 flex flex-col items-start hidden"
+    class="card min-w-[200px] p-4 flex flex-col items-start hidden"
     data-popup="settingsPopup"
 >
     <h6>Settings</h6>
@@ -26,7 +26,7 @@
             class="btn btn-sm variant-ghost w-full flex-center gap-2"
             href="/dashboard/me"
         >
-            <Icon icon="mdi:user" class="text-white text-xl" />
+            <Icon icon="mdi:user" class="text-xl" />
             Profile
         </a>
         <button

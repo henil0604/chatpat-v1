@@ -16,6 +16,15 @@ dependencies:
   '@prisma/client':
     specifier: ^4.12.0
     version: 4.12.0(prisma@4.12.0)
+  chalk:
+    specifier: ^5.2.0
+    version: 5.2.0
+  svelte-local-storage-store:
+    specifier: ^0.4.0
+    version: 0.4.0(svelte@3.58.0)
+  zod:
+    specifier: ^3.21.4
+    version: 3.21.4
 
 devDependencies:
   '@iconify/svelte':
@@ -631,6 +640,11 @@ packages:
 
   /caniuse-lite@1.0.30001473:
     resolution: {integrity: sha512-ewDad7+D2vlyy+E4UJuVfiBsU69IL+8oVmTuZnH5Q6CIUbxNfI50uVpRHbUPDD6SUaN2o0Lh4DhTrvLG/Tn1yg==}
+
+  /chalk@5.2.0:
+    resolution: {integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: false
 
   /chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
@@ -1491,6 +1505,15 @@ packages:
       svelte: '>=3.19.0'
     dependencies:
       svelte: 3.58.0
+
+  /svelte-local-storage-store@0.4.0(svelte@3.58.0):
+    resolution: {integrity: sha512-ctPykTt4S3BE5bF0mfV0jKiUR1qlmqLvnAkQvYHLeb9wRyO1MdIFDVI23X+TZEFleATHkTaOpYZswIvf3b2tWA==}
+    engines: {node: '>=0.14'}
+    peerDependencies:
+      svelte: ^3.48.0
+    dependencies:
+      svelte: 3.58.0
+    dev: false
 
   /svelte-preprocess@5.0.3(postcss@8.4.21)(svelte@3.58.0)(typescript@4.9.5):
     resolution: {integrity: sha512-GrHF1rusdJVbOZOwgPWtpqmaexkydznKzy5qIC2FabgpFyKN57bjMUUUqPRfbBXK5igiEWn1uO/DXsa2vJ5VHA==}

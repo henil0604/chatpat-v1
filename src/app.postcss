@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply min-h-screen;
+    @apply min-h-screen font-mono;
 
     min-width: 100vw;
 }
@@ -14,7 +14,7 @@ body {
 }
 
 .bg-brand {
-    @apply bg-gradient-to-b bg-gradient-to-b from-[#4DABF7] to-[#1864AB] text-white;
+    @apply bg-gradient-to-b from-[#4DABF7] to-[#1864AB] text-white;
 }
 
 .flex-center{
@@ -23,4 +23,8 @@ body {
 
 .btn-dark {
     @apply bg-gray-900;
+}
+
+.text-muted {
+    @apply text-gray-700 dark:text-slate-300;
 }
