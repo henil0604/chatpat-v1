@@ -5,7 +5,9 @@
 <div class="p-4">
     <div class="flex justify-between">
         <h4>Your Rooms</h4>
-        <button class="btn btn-sm variant-filled-primary">Create</button>
+        <a href="/dashboard/create" class="btn btn-sm variant-filled-primary"
+            >Create</a
+        >
     </div>
     <hr class="mt-2 mb-5" />
     <div class="flex flex-wrap gap-2">

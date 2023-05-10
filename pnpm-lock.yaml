@@ -19,9 +19,15 @@ dependencies:
   chalk:
     specifier: ^5.2.0
     version: 5.2.0
+  crypto-js:
+    specifier: ^4.1.1
+    version: 4.1.1
   svelte-local-storage-store:
     specifier: ^0.4.0
     version: 0.4.0(svelte@3.58.0)
+  svelte-use-form:
+    specifier: ^2.6.2
+    version: 2.6.2
   zod:
     specifier: ^3.21.4
     version: 3.21.4
@@ -42,6 +48,9 @@ devDependencies:
   '@tailwindcss/forms':
     specifier: ^0.5.3
     version: 0.5.3(tailwindcss@3.3.1)
+  '@types/crypto-js':
+    specifier: ^4.1.1
+    version: 4.1.1
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.21)
@@ -548,6 +557,10 @@ packages:
   /@types/cookie@0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
 
+  /@types/crypto-js@4.1.1:
+    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+    dev: true
+
   /@types/pug@2.0.6:
     resolution: {integrity: sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==}
     dev: true
@@ -681,6 +694,10 @@ packages:
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+    dev: false
 
   /cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -1610,6 +1627,12 @@ packages:
       svelte: 3.58.0
       typescript: 5.0.3
     dev: true
+
+  /svelte-use-form@2.6.2:
+    resolution: {integrity: sha512-nPjhBTPwd5ZrHn38GVcnTlCi7dEwsVOsSmAFXOxMQpdLMMrjCJ3eAS4SrZ39zqIZU11/c3X5FQK4BvUC6Lai6A==}
+    dependencies:
+      svelte: 3.58.0
+    dev: false
 
   /svelte@3.58.0:
     resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}

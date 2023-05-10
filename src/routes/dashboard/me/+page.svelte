@@ -21,7 +21,7 @@
     }
 </script>
 
-<div class="container flex-col p-4 max-sm:p-0">
+<div class="container flex-col p-4 max-sm:px-2">
     <!-- Profile Card -->
     <div class="card p-4 px-10">
         <div class="font-bold text-lg">Profile</div>

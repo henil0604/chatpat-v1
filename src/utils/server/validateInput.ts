@@ -1,7 +1,6 @@
 import type { MaybePromise } from '$app/forms';
 import { error } from '@sveltejs/kit';
 import log from '@/utils/log';
-import type { z } from 'zod';
 
 export default async function validateInput<T>(schema: Zod.AnyZodObject, dataGrabber: any) {
 

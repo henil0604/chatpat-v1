@@ -7,7 +7,7 @@
         offset,
         arrow,
     } from "@floating-ui/dom";
-    import { storePopup } from "@skeletonlabs/skeleton";
+    import { ProgressRadial, storePopup } from "@skeletonlabs/skeleton";
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -22,7 +22,9 @@
     import "@/app.postcss";
     import { onMount } from "svelte";
     import setDarkMode from "@/utils/setDarkMode";
-    import { darkMode } from "@/store";
+    import { darkMode, loading } from "@/store";
+
+    import { Toast } from "@skeletonlabs/skeleton";
 
     // Checking for initial settings values
     onMount(() => {
@@ -34,4 +36,13 @@
     console.log(`LAYOUT PAGE STORE`, $page);
 </script>
 
+{#if $loading}
+    <div
+        class="fixed w-screen h-screen top-0 left-0 backdrop-blur-md z-[999] flex-center"
+    >
+        <ProgressRadial width="w-16" stroke={100} />
+    </div>
+{/if}
+
+<Toast />
 <slot />
