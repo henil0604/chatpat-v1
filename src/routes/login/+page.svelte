@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
+    import { APP_NAME } from "@/const";
     import isLoggedIn from "@/utils/isLoggedIn";
     import { signIn } from "@auth/sveltekit/client";
     import Icon from "@iconify/svelte";
@@ -17,6 +18,10 @@
         });
     };
 </script>
+
+<svelte:head>
+    <title>{APP_NAME} - Login</title>
+</svelte:head>
 
 <div class="flex-center flex-col min-h-screen">
     <div class="card p-4 flex-center flex-col gap-3">

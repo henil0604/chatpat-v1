@@ -60,7 +60,7 @@ model VerificationToken {
 
 model Room {
   id          String     @id @default(cuid()) @map("_id")
-  name        String
+  name        String     @unique
   description String
   visibility  Visibility @default(UNLISTED)
   password    String?

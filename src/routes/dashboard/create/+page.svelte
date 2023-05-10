@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { REGEX } from "@/const";
+    import { APP_NAME, REGEX } from "@/const";
     import createRoom from "@/utils/createRoom";
     import { useForm, minLength, required, pattern } from "svelte-use-form";
     import type { Visibility } from "@prisma/client";
@@ -50,6 +50,10 @@
         await sleep(1000);
     }
 </script>
+
+<svelte:head>
+    <title>{APP_NAME} - Create Room</title>
+</svelte:head>
 
 <div class="container flex-col w-full flex-center p-4 max-sm:px-2">
     <div class="card min-w-[500px] max-md:min-w-full flex-center flex-col p-4">

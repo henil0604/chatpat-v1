@@ -25,6 +25,7 @@
     import { darkMode, loading } from "@/store";
 
     import { Toast } from "@skeletonlabs/skeleton";
+    import Loading from "@/lib/components/Loading.svelte";
 
     // Checking for initial settings values
     onMount(() => {
@@ -40,7 +41,7 @@
     <div
         class="fixed w-screen h-screen top-0 left-0 backdrop-blur-md z-[999] flex-center"
     >
-        <ProgressRadial width="w-16" stroke={100} />
+        <Loading width="w-16" stroke={100} />
     </div>
 {/if}
 

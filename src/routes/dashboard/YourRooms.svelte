@@ -1,5 +1,23 @@
-<script>
+<script lang="ts">
     import RoomCard from "@/routes/dashboard/RoomCard.svelte";
+    import { loading } from "@/store";
+    import fetchUserRooms from "@/utils/fetchUserRooms";
+    import type { Room } from "@prisma/client";
+    import { onMount } from "svelte";
+
+    let rooms: Room[];
+
+    onMount(async () => {
+        loading.set(true);
+        rooms = await fetchUserRooms();
+        loading.set(false);
+    });
+
+    async function onDeleteHandler({ detail }: { detail: Room }) {
+        rooms = rooms.filter((e) => e.name !== detail.name);
+
+        rooms = await fetchUserRooms();
+    }
 </script>
 
 <div class="p-4">
@@ -10,16 +28,22 @@
         >
     </div>
     <hr class="mt-2 mb-5" />
-    <div class="flex flex-wrap gap-2">
-        <RoomCard
-            room={{
-                name: "general",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                id: "123456789",
-                ownerId: "123456789",
-                description: "General Talk",
-            }}
-        />
+    {#if rooms && rooms.length === 0}
+        <p class="text-center text-muted italic w-full">Nothing to see here</p>
+    {/if}
+    <div
+        class="grid grid-cols-4 max-xl:grid-cols-2 max-lg:grid-cols-2 max-md:grid-cols-1 gap-2"
+    >
+        {#if rooms}
+            {#each rooms as room}
+                <RoomCard on:deletedMe={onDeleteHandler} {room} />
+            {/each}
+        {:else}
+            <div class="card max-w-[300px] p-4 flex gap-3 flex-col">
+                <div class="placeholder" />
+                <div class="placeholder" />
+                <div class="placeholder" />
+            </div>
+        {/if}
     </div>
 </div>

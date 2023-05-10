@@ -7,5 +7,7 @@ export const REGEX = {
 
 export const CODE = {
     VALIDATION_ERROR: 'VALIDATION_ERROR',
-    CREATED: 'CREATED'
+    CREATED: 'CREATED',
+    FOUND: 'FOUND',
+    DELETED: 'DELETED'
 }

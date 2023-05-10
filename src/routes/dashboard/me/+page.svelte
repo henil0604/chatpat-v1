@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { APP_NAME } from "@/const";
     import { darkMode } from "@/store";
     import fetchUserSettings from "@/utils/fetchUserSettings";
     import setDarkMode from "@/utils/setDarkMode";
@@ -20,6 +21,10 @@
         settings = await updateUserSettings(key, value);
     }
 </script>
+
+<svelte:head>
+    <title>{APP_NAME} - {user.name}</title>
+</svelte:head>
 
 <div class="container flex-col p-4 max-sm:px-2">
     <!-- Profile Card -->
