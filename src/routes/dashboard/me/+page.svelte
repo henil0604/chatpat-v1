@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { APP_NAME } from "@/const";
-    import { darkMode } from "@/store";
+    import { darkMode, loading } from "@/store";
     import fetchUserSettings from "@/utils/fetchUserSettings";
     import setDarkMode from "@/utils/setDarkMode";
     import updateUserSettings from "@/utils/updateUserSettings";
@@ -13,8 +13,9 @@
 
     let settings: Settings | null | undefined = undefined;
 
-    onMount(() => {
-        fetchUserSettings().then((e) => (settings = e));
+    onMount(async () => {
+        settings = await fetchUserSettings();
+        loading.set(false);
     });
 
     async function changeSettings(key: string, value: any) {
@@ -28,10 +29,12 @@
 
 <div class="container flex-col p-4 max-sm:px-2">
     <!-- Profile Card -->
-    <div class="card p-4 px-10">
+    <div class="card p-4 px-10 max-md:px-5">
         <div class="font-bold text-lg">Profile</div>
         <hr class="my-4" />
-        <div class="flex justify-start gap-10">
+        <div
+            class="flex justify-start gap-10 max-md:flex-col max-md:items-center"
+        >
             <img
                 width="200"
                 height="200"
@@ -39,21 +42,21 @@
                 src={user.image}
                 alt=""
             />
-            <div class="flex flex-col gap-3">
-                <label class="label">
+            <div class="flex flex-col gap-3 max-md:w-full">
+                <label class="label w-full">
                     <span>Name</span>
                     <input
-                        class="input"
+                        class="input w-full"
                         value={user.name}
                         type="text"
                         disabled
                         placeholder="Name"
                     />
                 </label>
-                <label class="label">
+                <label class="label w-full">
                     <span>Email</span>
                     <input
-                        class="input"
+                        class="input w-full"
                         value={user.email}
                         type="text"
                         disabled
@@ -67,7 +70,7 @@
     <div class="my-4" />
 
     <!-- Settings Card -->
-    <div class="card p-4 px-10">
+    <div class="card p-4 px-10 max-md:px-5">
         <div class="font-bold text-lg">Settings</div>
         <hr class="my-4" />
         {#if settings === null}

@@ -34,9 +34,14 @@
         }
 
         rooms = fetchedRooms.filter((room) => {
-            return room.name
-                .toLocaleLowerCase()
-                .includes(searchQuery.toLocaleLowerCase());
+            return (
+                room.name
+                    .toLocaleLowerCase()
+                    .includes(searchQuery.toLocaleLowerCase()) ||
+                room.description
+                    .toLocaleLowerCase()
+                    .includes(searchQuery.toLocaleLowerCase())
+            );
         });
 
         return;
@@ -58,7 +63,7 @@
                     bind:value={searchQuery}
                     on:input={handleSearch}
                     type="search"
-                    class="text-sm"
+                    class="text-sm max-md:text-xs"
                     placeholder="Search..."
                 />
             </div>
@@ -73,8 +78,10 @@
             class="grid grid-cols-4 max-xl:grid-cols-2 max-lg:grid-cols-2 max-md:grid-cols-1 gap-2"
         >
             {#if $loading}
-                {#each Array(4) as _}
-                    <div class="card max-w-[300px] p-4 flex gap-3 flex-col">
+                {#each Array(8) as _}
+                    <div
+                        class="card variant-soft-primary p-3 min-w-[250px] max-md:min-w-[100px] relative flex gap-3 flex-col"
+                    >
                         <div class="placeholder" />
                         <div class="placeholder" />
                         <div class="placeholder" />

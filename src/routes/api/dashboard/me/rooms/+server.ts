@@ -9,7 +9,11 @@ export const GET: RequestHandler = async ({ locals }) => {
     // validating user
     const user = await validateSessionAndGetUserOrThrow(locals.getSession);
 
-    const rooms = await getRoomsByUser(user.id as string);
+    let rooms = await getRoomsByUser(user.id as string);
+
+    rooms = rooms.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
 
     return json({
         code: CODE.FOUND,

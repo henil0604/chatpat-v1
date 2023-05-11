@@ -39,8 +39,10 @@
                 <RoomCard on:deletedMe={onDeleteHandler} {room} />
             {/each}
         {:else}
-            {#each Array(4) as _}
-                <div class="card max-w-[300px] p-4 flex gap-3 flex-col">
+            {#each Array(8) as _}
+                <div
+                    class="card variant-soft-primary p-3 min-w-[250px] max-md:min-w-[100px] relative flex gap-3 flex-col"
+                >
                     <div class="placeholder" />
                     <div class="placeholder" />
                     <div class="placeholder" />

@@ -27,11 +27,20 @@
     import { Toast } from "@skeletonlabs/skeleton";
     import Loading from "@/lib/components/Loading.svelte";
 
+    import { navigating } from "$app/stores";
+
     // Checking for initial settings values
     onMount(() => {
         darkMode.subscribe((value) => {
             setDarkMode(value);
         });
+    });
+
+    navigating.subscribe(() => {
+        if ($navigating) {
+            loading.set(true);
+            return;
+        }
     });
 
     console.log(`LAYOUT PAGE STORE`, $page);
