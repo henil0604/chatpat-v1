@@ -6,6 +6,7 @@
     import { loading } from "@/store";
     import { goto } from "$app/navigation";
     import sleep from "@/utils/sleep";
+    import { onMount } from "svelte";
 
     const form = useForm({
         roomName: {
@@ -49,6 +50,10 @@
 
         await sleep(1000);
     }
+
+    onMount(() => {
+        loading.set(false);
+    });
 </script>
 
 <svelte:head>

@@ -50,7 +50,7 @@
     <div
         class="fixed w-screen h-screen top-0 left-0 backdrop-blur-md z-[999] flex-center"
     >
-        <Loading width="w-16" stroke={100} />
+        <Loading width="40px" />
     </div>
 {/if}
 

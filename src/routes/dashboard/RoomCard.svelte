@@ -44,7 +44,7 @@
         <div
             class="absolute w-full h-full top-0 left-0 backdrop-blur-sm z-[999] flex-center"
         >
-            <Loading width="w-10" stroke={60} />
+            <Loading width="28px" />
         </div>
     {/if}
 

@@ -47,6 +47,7 @@ model User {
   sessions      Session[]
   Room          Room[]
   Settings      Settings[]
+  Chat          Chat[]
 }
 
 model VerificationToken {
@@ -68,6 +69,7 @@ model Room {
   ownerId     String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  Chat        Chat[]
 }
 
 model Settings {
@@ -83,4 +85,16 @@ enum Visibility {
   UNLISTED
   PUBLIC
   PRIVATE
+}
+
+model Chat {
+  id      String @id @default(cuid()) @map("_id")
+  content String
+  Room    Room   @relation(fields: [roomId], references: [id])
+  roomId  String
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -88,7 +88,7 @@
                     </div>
                 {/each}
             {/if}
-            {#if rooms}
+            {#if rooms && !$loading}
                 {#each rooms as room}
                     <RoomCard {room} />
                 {/each}
