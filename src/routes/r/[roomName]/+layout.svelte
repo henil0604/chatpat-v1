@@ -1,8 +1,13 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { loading, roomAccessAllowed } from "@/store";
+    import {
+        loading,
+        originalRoomPassword,
+        pusherChannel,
+        roomAccessAllowed,
+    } from "@/store";
     import { AppShell } from "@skeletonlabs/skeleton";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import Header from "@/routes/r/[roomName]/Header.svelte";
     import Footer from "@/routes/r/[roomName]/Footer.svelte";
     import { Visibility, type Room } from "@prisma/client";
@@ -21,6 +26,12 @@
         }
 
         loading.set(false);
+    });
+
+    onDestroy(() => {
+        pusherChannel.set(null);
+        roomAccessAllowed.set(undefined);
+        originalRoomPassword.set(null);
     });
 </script>
 
