@@ -5,6 +5,7 @@
         originalRoomPassword,
         pusherChannel,
         roomAccessAllowed,
+        roomStore,
     } from "@/store";
     import { AppShell } from "@skeletonlabs/skeleton";
     import { onDestroy, onMount } from "svelte";
@@ -16,6 +17,7 @@
     const room: Room = $page.data.room;
 
     onMount(() => {
+        roomStore.set(room);
         console.log(room);
         !$loading && loading.set(true);
 
@@ -32,6 +34,7 @@
         pusherChannel.set(null);
         roomAccessAllowed.set(undefined);
         originalRoomPassword.set(null);
+        roomStore.set(null);
     });
 </script>
 

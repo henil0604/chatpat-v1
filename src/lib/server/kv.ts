@@ -28,6 +28,6 @@ export async function cachify<T>(key: string, fallback: any, options?: Partial<C
         returnData = newData;
     }
     const endTime = Date.now();
-    log(`[cachify]`, `${key} ${endTime - startTime}ms`, 'info')
+    !options.force && log(`[cachify]`, `${key} ${endTime - startTime}ms`, 'info')
     return returnData as T;
 }

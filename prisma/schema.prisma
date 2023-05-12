@@ -90,7 +90,7 @@ enum Visibility {
 model Chat {
   id      String @id @default(cuid()) @map("_id")
   content String
-  Room    Room   @relation(fields: [roomId], references: [id])
+  room    Room   @relation(fields: [roomId], references: [id])
   roomId  String
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId String
