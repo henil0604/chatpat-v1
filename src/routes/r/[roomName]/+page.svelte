@@ -1,59 +1,33 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import Body from "@/components/Body.Room.svelte";
-    import Footer from "@/components/Footer.Room.svelte";
-    import Header from "@/components/Header.Room.svelte";
     import {
-        chatsStore,
+        addChat,
+        getChat,
         pusherChannel,
         rawChatsStore,
-        roomStore,
+        type chat,
+        chatsStore,
     } from "@/store";
-    import { onDestroy, onMount } from "svelte";
+    import initPusherChannelForRoom from "@/utils/initPusherChannelForRoom";
+    import pusher from "@/utils/pusher";
+    import type { Chat, Room, User } from "@prisma/client";
+    import { Avatar } from "@skeletonlabs/skeleton";
+    import { onMount } from "svelte";
+    import ChatBlock from "./ChatBlock.svelte";
 
-    const roomName = $page.params.roomName;
-    const room = $page.data.room;
-    const user = $page.data.user;
+    let room: Room = $page.data.room;
+    let chats: Chat[] = $page.data.chats;
+    let user: User = $page.data.user;
 
     onMount(() => {
-        room.Chat[room.Chat.length - 1] = {
-            ...room.Chat[room.Chat.length - 1],
-            scroll: true,
-        };
-        roomStore.set(room);
-        rawChatsStore.set(room.Chat);
-        // Quick hack for scroll to end
-        setTimeout(() => {
-            rawChatsStore.set([...room.Chat, { owner: {} }]);
-            rawChatsStore.set([...room.Chat]);
-        }, 10);
-    });
+        rawChatsStore.set(chats as any);
 
-    onDestroy(() => {
-        roomStore.set(null);
-        rawChatsStore.set([]);
-        pusherChannel.set(null);
+        initPusherChannelForRoom(room);
     });
 </script>
 
-<div class="w-full min-h-screen bg-brand">
-    <main
-        class="w-full h-screen bg-brand flex-center flex-col text-white transition p-4 max-sm:p-0"
-    >
-        {#if !room}
-            <div
-                class="bg-white text-black rounded shadow-lg flex-center flex-col max-sm:rounded-none p-5"
-            >
-                Room Not Found
-            </div>
-        {:else}
-            <div
-                class="bg-white text-black w-full rounded shadow-lg flex flex-col overflow-y-hidden max-sm:rounded-none min-h-full"
-            >
-                <Header />
-                <Body />
-                <Footer />
-            </div>
-        {/if}
-    </main>
+<div id="body" class="grow-1 w-full h-full pt-5 pb-2 overflow-y-scroll">
+    {#each $chatsStore as block, index}
+        <ChatBlock {block} />
+    {/each}
 </div>

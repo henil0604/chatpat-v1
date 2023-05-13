@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js'
 
 export function hash(text: string) {
-    return CryptoJS.SHA256(text).toString(CryptoJS.enc.Utf8)
+    return CryptoJS.SHA256(text).toString(CryptoJS.enc.Hex)
 }
 
 export function encrypt(text: string, password: string) {

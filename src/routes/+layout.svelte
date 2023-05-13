@@ -1,27 +1,58 @@
 <script lang="ts">
+    import {
+        computePosition,
+        autoUpdate,
+        flip,
+        shift,
+        offset,
+        arrow,
+    } from "@floating-ui/dom";
+    import { ProgressRadial, storePopup } from "@skeletonlabs/skeleton";
+
+    storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
     import { page } from "$app/stores";
+
+    // Your selected Skeleton theme:
+    import "@skeletonlabs/skeleton/themes/theme-gold-nouveau.css";
+
+    // This contains the bulk of Skeletons required styles:
+    import "@skeletonlabs/skeleton/styles/all.css";
+
     import "@/app.postcss";
-    import { loading, loadingMessage } from "@/store";
-    import { ToastContainer, FlatToast } from "svelte-toasts";
+    import { onMount } from "svelte";
+    import setDarkMode from "@/utils/setDarkMode";
+    import { darkMode, loading } from "@/store";
+
+    import { Toast } from "@skeletonlabs/skeleton";
+    import Loading from "@/lib/components/Loading.svelte";
+
+    import { navigating } from "$app/stores";
+
+    // Checking for initial settings values
+    onMount(() => {
+        darkMode.subscribe((value) => {
+            setDarkMode(value);
+        });
+    });
+
+    navigating.subscribe(() => {
+        if ($navigating) {
+            loading.set(true);
+            return;
+        }
+    });
 
     console.log(`LAYOUT PAGE STORE`, $page);
 </script>
 
-{#if $loading === true}
+{#if $loading}
     <div
-        class="w-full min-h-screen fixed flex-center top-0 left-0 bg-white cursor-wait z-[1000] transition-all"
+        class="fixed w-screen h-screen top-0 left-0 backdrop-blur-md z-[999] flex-center"
     >
-        <progress
-            class="progress progress-info w-full z-[1001] fixed top-0 rounded-none"
-        />
-
-        <div class="italic">
-            {$loadingMessage}
-        </div>
+        <Loading width="40px" />
     </div>
 {/if}
-<ToastContainer placement="top-right" let:data>
-    <FlatToast {data} />
-    <!-- Provider template for your toasts -->
-</ToastContainer>
+
+<Toast />
 <slot />

@@ -1,30 +1,36 @@
+import { MESSAGE_STORE_SECRET } from '$env/static/private';
 import { prisma } from '@/lib/server/prisma.js';
-
-// export const ssr = false;
-// export const prerender = false;
+import { decrypt } from '@/utils/crypto.js';
+import getRoomByName from '@/utils/server/getRoomByName.js';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ params, locals, url, fetch }) {
+export const load = async ({ params }) => {
 
     const roomName = params.roomName;
 
-    let room;
-    try {
-        const response = await fetch(`/api/r/${roomName}`)
+    const room = await getRoomByName(roomName, true)
 
-        const data = await response.json()
-
-        if (response.status === 404) {
-            room = null;
+    let chats = await prisma.chat.findMany({
+        where: {
+            roomId: room.id
+        },
+        orderBy: {
+            createdAt: "asc"
+        },
+        // take: -20,
+        include: {
+            owner: true,
+            room: true
         }
+    })
 
-        if (data.code === "FOUND") {
-            room = data.data;
-        }
-
-    } catch { }
+    chats = chats.map(chat => {
+        chat.content = decrypt(chat.content, MESSAGE_STORE_SECRET)
+        return chat;
+    })
 
     return {
-        room: room || null
-    };
-}
+        room,
+        chats
+    }
+};

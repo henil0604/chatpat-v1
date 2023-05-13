@@ -1,23 +1,12 @@
 <script>
-    import { page } from "$app/stores";
-    import AccountCard from "@/components/AccountCard.svelte";
-    import CreateRoomCard from "@/components/CreateRoomCard.svelte";
-    import JoinRoomCard from "@/components/JoinRoomCard.svelte";
-
-    $: user = $page.data.user;
+    import { APP_NAME } from "@/const";
+    import YourRooms from "@/routes/dashboard/YourRooms.svelte";
 </script>
 
-<div class="w-full min-h-screen bg-brand">
-    <main
-        class="w-full h-screen bg-brand flex items-center flex-col text-white transition-all py-32 max-sm:py-12"
-    >
-        <!-- ACCOUNT  -->
-        <AccountCard />
-        <div class="my-5" />
+<svelte:head>
+    <title>{APP_NAME} - Dashboard</title>
+</svelte:head>
 
-        <div class="flex gap-2 max-sm:flex-col">
-            <CreateRoomCard />
-            <JoinRoomCard />
-        </div>
-    </main>
+<div class="container p-4">
+    <YourRooms />
 </div>

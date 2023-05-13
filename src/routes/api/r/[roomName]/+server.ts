@@ -1,47 +1,27 @@
-import { error, json } from "@sveltejs/kit";
+import validateSessionAndGetUserOrThrow from "@/utils/server/validateSessionAndGetUserOrThrow";
 import type { RequestHandler } from "./$types";
-import { prisma } from "@/lib/server/prisma";
-import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
-import { decrypt } from "@/utils/crypto";
-import { MESSAGE_STORE_SECRET } from "$env/static/private";
+import getRoomNameOrThrow from "@/utils/server/getRoomNameOrThrow";
+import { error, json } from "@sveltejs/kit";
+import getRoomByNameOrThrowIfNotExists from "@/utils/server/getRoomByNameOrThrowIfNotExists";
+import { CODE } from "@/const";
+import deleteRoomByName from "@/utils/server/deleteRoomByName";
 
-export const GET: RequestHandler = async ({ request, locals, params, url }) => {
+export const DELETE: RequestHandler = async ({ locals, params }) => {
+
+    // validating user
+    const user = await validateSessionAndGetUserOrThrow(locals.getSession);
 
     const roomName = getRoomNameOrThrow(params);
 
-    // getting room
-    let room = await prisma.room.findFirst({
-        where: {
-            name: roomName
-        },
-        include: {
-            owner: true,
-            Chat: {
-                orderBy: {
-                    createdAt: "asc"
-                },
-                // take: -20,
-                include: {
-                    owner: true
-                }
-            }
-        }
-    })
+    const room = await getRoomByNameOrThrowIfNotExists(roomName, false)
 
-    if (!room) {
-        throw error(404, "Room Not Found")
+    if (room.ownerId !== user.id) {
+        throw error(401, "Unauthorized")
     }
 
-    room.Chat = room.Chat.map(chat => {
-        chat.content = decrypt(chat.content, MESSAGE_STORE_SECRET)
-        return chat;
-    })
+    const deleted = await deleteRoomByName(room.name);
 
     return json({
-        message: "Room Found",
-        code: 'FOUND',
-        data: {
-            ...room
-        }
+        code: CODE.DELETED,
     })
 };

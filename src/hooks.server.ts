@@ -6,6 +6,8 @@ import Google from '@auth/core/providers/google';
 import { AUTH_SECRET, GITHUB_ID, GITHUB_SECRET, GOOGLE_ID, GOOGLE_SECRET } from "$env/static/private"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "@/lib/server/prisma";
+import createSettingsForUser from "@/utils/server/createSettingsForUser";
+import getUserSettings from "@/utils/server/getUserSettings";
 
 export const handle = SvelteKitAuth({
     providers: [
@@ -22,17 +24,23 @@ export const handle = SvelteKitAuth({
     secret: AUTH_SECRET,
     adapter: PrismaAdapter(prisma),
     callbacks: {
-        session: ({ session, user }) => {
+        session: async ({ session, user }) => {
             if (session.user) {
                 session.user.id = user.id;
             }
+
+            try {
+                const settings = await getUserSettings(user.id);
+                session.user.settings = settings;
+            } catch { }
+
             return session;
         },
 
     },
     events: {
-        createUser: ({ user }) => {
-
+        async createUser({ user }) {
+            await createSettingsForUser(user.id);
         }
     }
 })

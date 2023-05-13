@@ -38,14 +38,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
+  id            String     @id @default(cuid()) @map("_id")
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Room          Room[]
+  Settings      Settings[]
   Chat          Chat[]
 }
 
@@ -59,24 +60,41 @@ model VerificationToken {
 }
 
 model Room {
-  id         String   @id @default(cuid()) @map("_id")
-  name       String   @unique
-  visibility String
-  password   String?
-  owner      User     @relation(fields: [ownerId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  ownerId    String
-  Chat       Chat[]
+  id          String     @id @default(cuid()) @map("_id")
+  name        String     @unique
+  description String
+  visibility  Visibility @default(UNLISTED)
+  password    String?
+  owner       User       @relation(fields: [ownerId], references: [id])
+  ownerId     String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  Chat        Chat[]
+}
+
+model Settings {
+  id String @id @default(cuid()) @map("_id")
+
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Visibility {
+  UNLISTED
+  PUBLIC
+  PRIVATE
 }
 
 model Chat {
-  id        String   @id @default(cuid()) @map("_id")
-  content   String
-  type      String?  @default("message")
-  room      Room     @relation(fields: [roomId], references: [id])
-  roomId    String
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String
+  id      String @id @default(cuid()) @map("_id")
+  content String
+  room    Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId  String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

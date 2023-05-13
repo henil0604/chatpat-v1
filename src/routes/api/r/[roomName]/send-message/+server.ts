@@ -1,15 +1,17 @@
-import { error, json } from "@sveltejs/kit";
+import getRoomNameOrThrow from "@/utils/server/getRoomNameOrThrow";
+import validateSessionAndGetUserOrThrow from "@/utils/server/validateSessionAndGetUserOrThrow";
 import type { RequestHandler } from "./$types";
-import { prisma } from "@/lib/server/prisma";
-import pusher from "@/lib/server/pusher";
-import validateSessionAndGetUserOrThrow from "@/utils/validateSessionAndGetUserOrThrow";
-import getRoomNameOrThrow from "@/utils/getRoomNameOrThrow";
+import { error, json } from "@sveltejs/kit";
 import { z } from "zod";
-import validateInput from "@/utils/validateInput";
-import getChatById from "@/utils/getChatById";
-import getRoomOrThrowNotExist from "@/utils/getRoomOrThrowNotExist";
+import validateInput from "@/utils/server/validateInput";
+import getChatById from "@/utils/server/getChatById";
+import { decrypt, encrypt } from "@/utils/crypto";
+import { PUBLIC_TRANSPORT_SECRET } from "$env/static/public";
+import pusher from "@/lib/server/pusher";
+import getRoomByNameOrThrowIfNotExists from "@/utils/server/getRoomByNameOrThrowIfNotExists";
 import log from "@/utils/log";
-import { encrypt } from "@/utils/crypto";
+import addChat from "@/utils/server/addChat";
+import { CODE } from "@/const";
 import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
@@ -34,20 +36,21 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 	const data = await validateInput<z.infer<typeof schema>>(schema, request.json())
 
 	// check if chat already exist with `id` provided by client
-	if (await getChatById(data.id)) {
+	if (await getChatById(data.id, false)) {
 		throw error(400, `Chat with id:"${data.id}" already exists`)
 	}
 
 	// Getting room
-	const room = await getRoomOrThrowNotExist(roomName, true);
+	const room = await getRoomByNameOrThrowIfNotExists(roomName, true);
 
-	// TODO: Encryption
+	// Decrypting message
+	data.message = decrypt(data.message, PUBLIC_TRANSPORT_SECRET);
 
 	// Pusher Event trigger
 	try {
-		const push = await pusher.trigger(roomName, "new-chat", {
+		const push = await pusher.trigger(`r-${roomName}`, "new-chat", {
 			id: data.id,
-			content: data.message,
+			content: encrypt(data.message, PUBLIC_TRANSPORT_SECRET),
 			createdAt: new Date(data.createdAt),
 			owner: user,
 			room: room,
@@ -55,40 +58,26 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
 			roomId: room.id
 		})
 	} catch (e) {
-		console.error(e);
+		log(`[r-${roomName}][send-message][pusher]`, e, "error");
+		throw error(500, "Something went wrong while broadcasting")
 	}
 
 	// creating chat in database
 	let message;
 	try {
-		message = await prisma.chat.create({
-			data: {
-				id: data.id,
-				content: encrypt(data.message, MESSAGE_STORE_SECRET),
-				createdAt: new Date(data.createdAt),
-				owner: {
-					connect: {
-						email: user.email as string
-					}
-				},
-				room: {
-					connect: {
-						name: roomName
-					}
-				}
-			}
-		})
+		message = await addChat(room, user, { id: data.id, message: data.message, createdAt: data.createdAt })
 	} catch (error) {
-		log(`[send-message] [store-chat]`, error, 'error')
-		console.error(error);
+		log(`[r-${roomName}][send-message][store-chat]`, error, 'error')
+		// @ts-ignore
+		throw error(500, "Something went wrong with database query")
 		// TODO: send warning to all users that this message was not stored in database
 	}
 
 	return json({
 		message: "Message Sent",
-		code: "SENT",
+		code: CODE.CREATED,
 		data: {
 			...message
 		}
 	});
-};
+}

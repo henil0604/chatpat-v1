@@ -1,22 +1,31 @@
-import type { Chat, Room, User } from '@prisma/client';
-import { writable, get } from 'svelte/store';
-import transformChats, { type block } from '@/utils/transformChats';
+import { persisted } from 'svelte-local-storage-store'
+import { get, writable } from 'svelte/store'
 import type { Channel } from 'pusher-js';
+import type { Chat, Room, User } from '@prisma/client';
+import type { block } from '@/utils/transformChats';
+import transformChats from '@/utils/transformChats';
 
-export const loading = writable<boolean>(false);
-export const loadingMessage = writable<string>("");
+export const darkMode = persisted<boolean>("chatpatDarkMode", true)
 
-export const roomStore = writable<Room | null>(null)
+export const loading = writable(false);
+export const roomAccessAllowed = writable<undefined | boolean>(undefined);
+export const originalRoomPassword = writable<string | null>(null);
+export const roomStore = writable<Room | null>(null);
 
-export type chat = Chat & { room: Room, owner: User, atClient?: boolean, scroll?: boolean };
 
+// Channel
+export const pusherChannel = writable<Channel | null>(null)
+
+export type chat = Chat & { room: Room, owner: User, atClient?: boolean, color?: string };
 export const chatsStore = writable<block[]>([]);
 export const rawChatsStore = writable<chat[]>([]);
 
 rawChatsStore.subscribe((chats) => {
     const transformed = transformChats(chats);
+    console.log(transformed)
     chatsStore.set(transformed);
 })
+
 
 export function addChat(data: chat) {
     rawChatsStore.update((val) => {
@@ -42,9 +51,6 @@ export function updateChat(id: string, data: any) {
         return chats;
     })
 }
-
-// Channel
-export const pusherChannel = writable<Channel | null>(null)
 
 export const chatQueue = writable<string[]>([]);
 export const sendingChat = writable<boolean>(false);

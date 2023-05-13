@@ -1,11 +1,9 @@
 import { redirect } from "@sveltejs/kit";
 
-export const ssr = false;
-
 function isProtectedRoute(url: string): boolean {
   const ProtectedRoutes = [
-    "/preregister",
-    "/dashboard",
+    '/dashboard',
+    "/dashboard/*",
     "/r/*"
   ]
 
@@ -29,7 +27,6 @@ function isProtectedRoute(url: string): boolean {
 }
 
 /** @type {import('./$types').PageLoad} */
-// @ts-ignore
 export async function load({ locals, url }) {
   const session = await locals.getSession();
 
@@ -38,7 +35,6 @@ export async function load({ locals, url }) {
   }
 
   if ((!session || !session?.user) && isProtectedRoute(url.pathname)) {
-    console.log(`"${url.pathname}" matched, redirecting!`)
     const fromUrl = url.pathname + url.search;
     throw redirect(301, `/login?redirectTo=${fromUrl}`)
   }
