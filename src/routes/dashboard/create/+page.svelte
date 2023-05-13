@@ -2,7 +2,6 @@
     import { APP_NAME, REGEX } from "@/const";
     import createRoom from "@/utils/createRoom";
     import { useForm, minLength, required, pattern } from "svelte-use-form";
-    import type { Visibility } from "@prisma/client";
     import { loading } from "@/store";
     import { goto } from "$app/navigation";
     import sleep from "@/utils/sleep";
@@ -18,7 +17,7 @@
             validators: [required],
         },
         visibility: {
-            initial: "UNLISTED",
+            initial: "unlisted",
             validators: [required],
         },
         password: {
@@ -35,7 +34,7 @@
 
         const created = await createRoom({
             name: $form.values.roomName,
-            visibility: $form.values.visibility as Visibility,
+            visibility: $form.values.visibility,
             password: $form.values.password,
             description: $form.values.description,
         });
@@ -98,13 +97,13 @@
             <label class="label w-full">
                 <span>Visibility</span>
                 <select name="visibility" required class="select">
-                    <option value="UNLISTED">Unlisted</option>
-                    <option value="PUBLIC">Public</option>
-                    <option value="PRIVATE">Private</option>
+                    <option value="unlisted">Unlisted</option>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
                 </select>
             </label>
 
-            {#if $form.visibility?.value === "PRIVATE"}
+            {#if $form.visibility?.value === "private"}
                 <label class="label w-full">
                     <span>Password</span>
                     <input

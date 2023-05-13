@@ -1,6 +1,6 @@
 import { cachify } from "@/lib/server/kv";
 import { prisma } from "@/lib/server/prisma";
-import { Visibility, type Room } from "@prisma/client";
+import type { Room } from "@prisma/client";
 
 export default async function getExploreRooms() {
 
@@ -12,7 +12,7 @@ export default async function getExploreRooms() {
 
     return allRooms
         .filter((room) => {
-            return room.visibility === Visibility.PUBLIC
+            return room.visibility === 'public'
         })
         .sort((a, b) => {
             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();

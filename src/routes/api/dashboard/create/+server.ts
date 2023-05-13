@@ -2,7 +2,6 @@ import validateSessionAndGetUserOrThrow from "@/utils/server/validateSessionAndG
 import type { RequestHandler } from "./$types";
 import { z } from "zod";
 import validateInput from "@/utils/server/validateInput";
-import { Visibility } from "@prisma/client";
 import { CODE, REGEX } from "@/const";
 import { error, json } from "@sveltejs/kit";
 import createRoom from "@/utils/server/createRoom";
@@ -19,14 +18,14 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     let schema = z.object({
         name: z.string().regex(REGEX.alphanumeric),
         description: z.string(),
-        visibility: z.enum(["UNLISTED", "PUBLIC", "PRIVATE"]),
+        visibility: z.enum(["unlisted", "public", "private"]),
         password: z.string(),
     })
 
     // Getting data from request
     const data = await validateInput<z.infer<typeof schema>>(schema, request.json());
 
-    if (data.visibility === Visibility.PRIVATE && (!data.password || data.password.trim() === "")) {
+    if (data.visibility === 'private' && (!data.password || data.password.trim() === "")) {
         return json({
             code: CODE.VALIDATION_ERROR,
             message: "Password is required if room visibility is private"
