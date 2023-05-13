@@ -2,9 +2,11 @@
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
     import { APP_NAME } from "@/const";
+    import { loading } from "@/store";
     import isLoggedIn from "@/utils/isLoggedIn";
     import { signIn } from "@auth/sveltekit/client";
     import Icon from "@iconify/svelte";
+    import { onMount } from "svelte";
 
     const url = $page.url.searchParams.get("redirectTo") || "/";
 
@@ -17,6 +19,10 @@
             callbackUrl: url,
         });
     };
+
+    onMount(() => {
+        loading.set(false);
+    });
 </script>
 
 <svelte:head>
