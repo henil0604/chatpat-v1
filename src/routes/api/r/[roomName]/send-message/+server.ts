@@ -12,6 +12,7 @@ import getRoomByNameOrThrowIfNotExists from "@/utils/server/getRoomByNameOrThrow
 import log from "@/utils/log";
 import addChat from "@/utils/server/addChat";
 import { CODE } from "@/const";
+import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
@@ -67,6 +68,7 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
         message = await addChat(room, user, { id: data.id, message: data.message, createdAt: data.createdAt })
     } catch (error) {
         log(`[r-${roomName}][send-message][store-chat]`, error, 'error')
+        // @ts-ignore
         throw error(500, "Something went wrong with database query")
         // TODO: send warning to all users that this message was not stored in database
     }

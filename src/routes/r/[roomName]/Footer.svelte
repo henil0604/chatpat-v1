@@ -68,7 +68,18 @@
             on:keyup={(e) => {
                 e.keyCode === 13 && handleSend();
             }}
-            class="input w-full"
+            class={`input w-full 
+            ${
+                messageValue.length > 50 &&
+                messageValue.length < 100 &&
+                "text-yellow-500"
+            }
+            ${
+                messageValue.length > 100 &&
+                messageValue.length < 200 &&
+                "text-orange-500"
+            } 
+            ${messageValue.length > 200 && "text-red-500"}`}
             type="text"
             placeholder="Type your message..."
         />
