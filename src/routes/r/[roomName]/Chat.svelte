@@ -24,22 +24,20 @@
     }
 
     onMount(() => {
-        // if (isUserAtEndOfContainer("#page")) {
-        div.scrollIntoView();
-        // }
+        div?.scrollIntoView();
     });
 </script>
 
 <div
     bind:this={div}
-    class={`chat items-end flex py-1 px-3 justify-between transition w-full hover:bg-gray-200 dark:hover:bg-gray-800 ${
+    class={`chat items-end flex py-1 px-3 max-md:px-2 justify-between transition w-full hover:bg-gray-200 dark:hover:bg-gray-800 ${
         index > 0 ? "pt-0" : ""
     }`}
     data-chat-id={chat.id}
 >
-    <p class="break-words content order-first mr-10">
+    <div class="break-words order-first mr-10 text-base max-md:text-sm">
         {chat.content}
-    </p>
+    </div>
     <div
         class="chat-time text-muted text-xs italic hidden order-last tracking-tighter"
     >

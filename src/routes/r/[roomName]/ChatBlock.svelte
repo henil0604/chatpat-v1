@@ -28,7 +28,7 @@
     <div class="mt-2">
         {#each block.sections as section}
             <div
-                class={`w-full h-fit py-1 px-6 rounded-sm transition max-sm:px-3 flex gap-2 my-3`}
+                class={`w-full h-fit py-1 px-6 max-md:px-4 max-sm:px-2 rounded-sm transition flex gap-2 my-3 max-md:my-1 max-md:gap-1`}
             >
                 <div id="avatar" class={`min-w-[40px]`}>
                     <div class="avatar">
@@ -45,10 +45,10 @@
                     id="content"
                     class={`card rounded-md overflow-hidden w-fit min-w-[300px] max-md:min-w-[300px] max-sm:w-full text-[14px]`}
                 >
-                    <div class={`w-full px-2 py-2 variant-ghost-primary`}>
+                    <div class={`w-full p-2 max-md:py-1 variant-ghost-primary`}>
                         {section.owner.name}
                     </div>
-                    <div id="chats" class="flex backdrop-blur-3xl flex-col">
+                    <div id="chats" class="flex flex-col">
                         {#each section.chats as chat, index}
                             <!-- CHAT -->
                             <Chat {chat} {index} />

@@ -17,14 +17,16 @@
     const room: Room = $page.data.room;
 
     onMount(() => {
-        roomStore.set(room);
-        console.log(room);
-        !$loading && loading.set(true);
+        if (room) {
+            roomStore.set(room);
+            console.log(room);
+            !$loading && loading.set(true);
 
-        if (room.visibility == "private") {
-            roomAccessAllowed.set(false);
-        } else {
-            roomAccessAllowed.set(true);
+            if (room.visibility == "private") {
+                roomAccessAllowed.set(false);
+            } else {
+                roomAccessAllowed.set(true);
+            }
         }
 
         loading.set(false);
@@ -40,25 +42,25 @@
 
 {#if !room}
     404
-{/if}
+{:else}
+    {#if $roomAccessAllowed === undefined}
+        <div />
+    {/if}
 
-{#if $roomAccessAllowed === undefined}
-    <div />
-{/if}
+    {#if $roomAccessAllowed === true}
+        <AppShell>
+            <svelte:fragment slot="header"><Header /></svelte:fragment>
+            <slot />
+            <svelte:fragment slot="footer"><Footer /></svelte:fragment>
+        </AppShell>
+    {/if}
 
-{#if $roomAccessAllowed === true}
-    <AppShell>
-        <svelte:fragment slot="header"><Header /></svelte:fragment>
-        <slot />
-        <svelte:fragment slot="footer"><Footer /></svelte:fragment>
-    </AppShell>
-{/if}
-
-{#if $roomAccessAllowed === false}
-    <AppShell>
-        <svelte:fragment slot="header"><Header /></svelte:fragment>
-        <div class="flex-center h-full max-md:h-fit max-md:mt-4">
-            <PasswordCard />
-        </div>
-    </AppShell>
+    {#if $roomAccessAllowed === false}
+        <AppShell>
+            <svelte:fragment slot="header"><Header /></svelte:fragment>
+            <div class="flex-center h-full max-md:h-fit max-md:mt-4">
+                <PasswordCard />
+            </div>
+        </AppShell>
+    {/if}
 {/if}

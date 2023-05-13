@@ -10,6 +10,10 @@ export const load = async ({ params }) => {
 
     const room = await getRoomByName(roomName, true)
 
+    if (!room) {
+        return {}
+    }
+
     let chats = await prisma.chat.findMany({
         where: {
             roomId: room.id
