@@ -59,7 +59,10 @@
         <button
             on:click={handleDelete}
             class="btn variant-ghost-error max-md:btn-sm"
-            ><Icon icon="mdi:delete" class="text-lg" /></button
+            ><Icon
+                icon="mdi:delete"
+                class="text-lg text-red-500 dark:text-white"
+            /></button
         >
         <a
             href={`/r/${room.name}`}

@@ -22,11 +22,11 @@
     }
 
     .spinner > div {
-        background-color: rgba(0, 77, 255, 0.2);
+        background-color: rgba(77, 214, 227, 0.2);
         height: 100%;
         position: absolute;
         width: 100%;
-        border: 2px solid #004dff;
+        border: 2px solid #38eded;
     }
 
     .spinner div:nth-of-type(1) {

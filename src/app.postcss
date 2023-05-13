@@ -16,6 +16,11 @@ body {
     background-image:none;
 }
 
+[data-theme='rocket']{
+    @apply bg-gray-200;
+    background-image:none;
+}
+
 .min-h-screen {
     min-height: 100vh;
     min-height: 100dvh;
@@ -39,4 +44,8 @@ body {
 
 .input-error {
     @apply border-red-500 bg-inherit
+}
+
+.glassy {
+    backdrop-filter: blur(50px);
 }

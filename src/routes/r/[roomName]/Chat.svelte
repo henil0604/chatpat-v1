@@ -32,12 +32,12 @@
 
 <div
     bind:this={div}
-    class={`chat items-end flex py-1 px-3 justify-between rounded transition w-full hover:bg-gray-200 dark:hover:bg-gray-800 ${
+    class={`chat items-end flex py-1 px-3 justify-between transition w-full hover:bg-gray-200 dark:hover:bg-gray-800 ${
         index > 0 ? "pt-0" : ""
     }`}
     data-chat-id={chat.id}
 >
-    <p class="break-all content order-first mr-10">
+    <p class="break-words content order-first mr-10">
         {chat.content}
     </p>
     <div
