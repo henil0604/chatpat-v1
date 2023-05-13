@@ -8,6 +8,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "@/lib/server/prisma";
 import createSettingsForUser from "@/utils/server/createSettingsForUser";
 import getUserSettings from "@/utils/server/getUserSettings";
+import log from "@/utils/log";
 
 export const handle = SvelteKitAuth({
     providers: [
@@ -32,7 +33,9 @@ export const handle = SvelteKitAuth({
             try {
                 const settings = await getUserSettings(user.id);
                 session.user.settings = settings;
-            } catch { }
+            } catch (e) {
+                log(`[hooks][callbacks][session]`, e, 'error')
+            }
 
             return session;
         },
@@ -42,7 +45,9 @@ export const handle = SvelteKitAuth({
         async createUser({ user }) {
             try {
                 await createSettingsForUser(user.id);
-            } catch (e) { }
+            } catch (e) {
+                log(`[hooks][events][createUser]`, e, 'error')
+            }
         }
     }
 })
