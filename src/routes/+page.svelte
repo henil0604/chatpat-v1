@@ -1,6 +1,12 @@
 <script>
     import { APP_NAME, APP_TAGLINE } from "@/const";
+    import { loading } from "@/store";
     import Icon from "@iconify/svelte";
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        loading.set(false);
+    });
 </script>
 
 <svelte:head>
