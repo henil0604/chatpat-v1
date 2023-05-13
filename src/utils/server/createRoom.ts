@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/server/prisma";
-import type { Room } from "@prisma/client";
 import type { CreateRoomOptions } from "@/utils/createRoom";
 import { hash } from "@/utils/crypto";
 

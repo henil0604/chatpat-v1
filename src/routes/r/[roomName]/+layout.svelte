@@ -11,7 +11,7 @@
     import { onDestroy, onMount } from "svelte";
     import Header from "@/routes/r/[roomName]/Header.svelte";
     import Footer from "@/routes/r/[roomName]/Footer.svelte";
-    import { Visibility, type Room } from "@prisma/client";
+    import type { Room } from "@prisma/client";
     import PasswordCard from "@/routes/r/[roomName]/PasswordCard.svelte";
 
     const room: Room = $page.data.room;
@@ -21,7 +21,7 @@
         console.log(room);
         !$loading && loading.set(true);
 
-        if (room.visibility == Visibility.PRIVATE) {
+        if (room.visibility === "private") {
             roomAccessAllowed.set(false);
         } else {
             roomAccessAllowed.set(true);

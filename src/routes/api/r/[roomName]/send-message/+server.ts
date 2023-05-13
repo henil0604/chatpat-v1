@@ -12,7 +12,6 @@ import getRoomByNameOrThrowIfNotExists from "@/utils/server/getRoomByNameOrThrow
 import log from "@/utils/log";
 import addChat from "@/utils/server/addChat";
 import { CODE } from "@/const";
-import { MESSAGE_STORE_SECRET } from "$env/static/private";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
