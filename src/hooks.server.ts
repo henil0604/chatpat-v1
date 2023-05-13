@@ -40,7 +40,9 @@ export const handle = SvelteKitAuth({
     },
     events: {
         async createUser({ user }) {
-            await createSettingsForUser(user.id);
+            try {
+                await createSettingsForUser(user.id);
+            } catch (e) { }
         }
     }
 })
