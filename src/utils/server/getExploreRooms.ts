@@ -7,7 +7,7 @@ export default async function getExploreRooms() {
     let allRooms = await cachify<Room[]>(
         `explore-rooms`,
         () => (prisma.room.findMany()),
-        { timeout: 1000 * 60 * 1 }  // 1 minute cache
+        { timeout: 1000 * 20 }  // 20 seconds cache
     )
 
     return allRooms

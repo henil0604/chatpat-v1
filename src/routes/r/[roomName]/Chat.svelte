@@ -24,9 +24,9 @@
     }
 
     onMount(() => {
-        if (isUserAtEndOfContainer("#page")) {
-            div.scrollIntoView();
-        }
+        // if (isUserAtEndOfContainer("#page")) {
+        div.scrollIntoView();
+        // }
     });
 </script>
 
