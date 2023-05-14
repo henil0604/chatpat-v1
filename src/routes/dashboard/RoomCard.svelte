@@ -4,8 +4,9 @@
     import sleep from "@/utils/sleep";
     import Icon from "@iconify/svelte";
     import type { Room } from "@prisma/client";
-    import { ProgressRadial, toastStore } from "@skeletonlabs/skeleton";
+    import { toastStore } from "@skeletonlabs/skeleton";
     import { createEventDispatcher } from "svelte";
+    import moment from "moment";
 
     export let room: Room;
 
@@ -46,25 +47,40 @@
         </div>
     {/if}
 
-    <div class="font-bold text-lg">{room.name}</div>
+    <div class="font-bold text-lg flex items-center gap-2">
+        {room.name}
+        {#if room.visibility === "public"}
+            <Icon icon="material-symbols:public" />
+        {/if}
+        {#if room.visibility === "unlisted"}
+            <Icon icon="el:paper-clip" />
+        {/if}
+    </div>
     <hr class="my-2" />
-    <p class="text-muted font-thin">
+    <div class="text-muted font-thin">
         {room.description}
-    </p>
+    </div>
 
     <!-- Actions -->
-    <div class="mt-4 flex gap-2 w-full justify-end">
-        <button
-            on:click={handleDelete}
-            class="btn variant-ghost-error max-md:btn-sm"
-            ><Icon
-                icon="mdi:delete"
-                class="text-lg text-red-500 dark:text-white"
-            /></button
-        >
-        <a
-            href={`/r/${room.name}`}
-            class="btn btn-sm variant-filled-primary max-md:btn-sm">Join</a
-        >
+    <div class="mt-3 flex w-full justify-between items-center">
+        <div class="font-thin italic text-xs text-muted flex justify-end">
+            Created {moment(room.createdAt).fromNow()}
+        </div>
+
+        <div class="flex-center gap-2">
+            <button
+                on:click={handleDelete}
+                class="btn variant-ghost-error p-2 max-md:btn-sm"
+            >
+                <Icon
+                    icon="mdi:delete"
+                    class="text-base text-red-500 dark:text-white"
+                />
+            </button>
+            <a
+                href={`/r/${room.name}`}
+                class="btn btn-sm variant-filled-primary py-2">Join</a
+            >
+        </div>
     </div>
 </div>

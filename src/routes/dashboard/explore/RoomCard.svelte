@@ -2,6 +2,7 @@
     import Loading from "@/lib/components/Loading.svelte";
     import Icon from "@iconify/svelte";
     import type { Room } from "@prisma/client";
+    import moment from "moment";
 
     export let room: Room;
 
@@ -24,10 +25,15 @@
     </p>
 
     <!-- Actions -->
-    <div class="mt-4 flex gap-2 w-full justify-end">
-        <a
-            href={`/r/${room.name}`}
-            class="btn btn-sm variant-filled-primary max-md:btn-sm">Join</a
-        >
+    <div class="mt-3 flex w-full justify-between items-center">
+        <div class="font-thin italic text-xs text-muted flex justify-end">
+            Created {moment(room.createdAt).fromNow()}
+        </div>
+        <div class="flex-center">
+            <a
+                href={`/r/${room.name}`}
+                class="btn btn-sm variant-filled-primary max-md:btn-sm">Join</a
+            >
+        </div>
     </div>
 </div>
