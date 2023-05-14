@@ -40,6 +40,9 @@
 
     navigating.subscribe(() => {
         if ($navigating) {
+            if ($navigating.from?.route.id === $navigating.to?.route.id) {
+                return;
+            }
             loading.set(true);
             return;
         }

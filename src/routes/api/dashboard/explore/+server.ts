@@ -3,6 +3,7 @@ import type { RequestHandler } from "./$types";
 import { json } from "@sveltejs/kit";
 import getExploreRooms from "@/utils/server/getExploreRooms";
 import { CODE } from "@/const";
+import { prisma } from "@/lib/server/prisma";
 
 export const GET: RequestHandler = async ({ locals }) => {
 

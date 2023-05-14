@@ -28,7 +28,7 @@
     <div class="mt-2">
         {#each block.sections as section}
             <div
-                class={`w-full h-fit py-1 px-6 max-md:px-4 max-sm:px-2 rounded-sm transition flex gap-2 my-3 max-md:my-1 max-md:gap-1`}
+                class={`w-full h-fit py-1 px-6 max-md:px-5 max-sm:px-4 rounded-sm transition flex gap-2 my-3 max-md:my-1 max-md:gap-1`}
             >
                 <div id="avatar" class={`min-w-[40px]`}>
                     <div class="avatar">
@@ -43,7 +43,7 @@
                 </div>
                 <div
                     id="content"
-                    class={`card rounded-md overflow-hidden w-fit min-w-[300px] max-md:min-w-[300px] max-sm:w-full text-[14px]`}
+                    class={`card rounded-md border-primary-500 overflow-hidden w-fit min-w-[300px] max-md:min-w-[300px] max-sm:w-full text-[14px]`}
                 >
                     <div class={`w-full p-2 max-md:py-1 variant-ghost-primary`}>
                         {section.owner.name}

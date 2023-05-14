@@ -30,7 +30,7 @@
 
 <div
     bind:this={div}
-    class={`chat items-end flex py-1 px-3 max-md:px-2 justify-between transition w-full hover:bg-gray-200 dark:hover:bg-gray-800 ${
+    class={`chat items-end flex py-1 px-3 max-md:px-3 justify-between transition w-full hover:bg-gray-400 dark:hover:bg-gray-800 ${
         index > 0 ? "pt-0" : ""
     }`}
     data-chat-id={chat.id}
