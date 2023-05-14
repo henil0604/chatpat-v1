@@ -48,7 +48,7 @@
                     {/if}
                     <div
                         id="chats"
-                        class="flex flex-col w-full gap-0.5 mt-1 {section.owner
+                        class="flex flex-col w-full gap-1 mt-1 {section.owner
                             .id !== user.id
                             ? 'items-start'
                             : 'items-end'}"
