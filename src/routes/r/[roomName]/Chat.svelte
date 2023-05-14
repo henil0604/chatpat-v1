@@ -31,7 +31,7 @@
 
 <div
     bind:this={div}
-    class={`chat items-end max-w-screen flex py-1 px-3 max-md:px-3 justify-between transition w-full hover:bg-gray-400 dark:hover:bg-gray-800 ${
+    class={`card items-end max-w-screen flex py-1 px-3 max-md:px-3 justify-between transition w-fit hover:bg-gray-400 dark:hover:bg-gray-800 ${
         index > 0 ? "pt-0" : ""
     }`}
     data-chat-id={chat.id}

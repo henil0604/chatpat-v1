@@ -34,14 +34,16 @@
                     : ''}"
             >
                 <div
-                    id="content"
-                    class="card rounded-md border-primary-500 overflow-hidden w-fit min-w-[300px] max-w-[80%] max-sm:max-w-[90%] max-sm:min-w-none max-sm:w-full text-[14px]"
+                    class="flex flex-col rounded-md border-primary-500 overflow-hidden w-fit min-w-[300px] max-w-[80%] max-sm:max-w-[90%] max-sm:min-w-fit max-sm:max-w-fit text-[14px] {section
+                        .owner.id === user.id
+                        ? 'items-end'
+                        : 'items-start'}"
                 >
                     <div
-                        class="w-full p-2 flex items-center gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary {section
+                        class="w-fit rounded p-2 flex items-center gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary {section
                             .owner.id === user.id
-                            ? 'flex-row-reverse'
-                            : ''}"
+                            ? 'flex-row-reverse justify-end'
+                            : 'items-start'}"
                     >
                         {#if section.owner.id !== user.id}
                             <div class="w-[30px]">
@@ -54,7 +56,13 @@
                         {/if}
                         {section.owner.name}
                     </div>
-                    <div id="chats" class="flex flex-col">
+                    <div
+                        id="chats"
+                        class="flex flex-col w-full gap-0.5 mt-1 {section.owner
+                            .id !== user.id
+                            ? 'items-start'
+                            : 'items-end'}"
+                    >
                         {#each section.chats as chat, index}
                             <!-- CHAT -->
                             <Chat {chat} {index} />
