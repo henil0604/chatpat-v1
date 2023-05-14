@@ -7,7 +7,7 @@
         offset,
         arrow,
     } from "@floating-ui/dom";
-    import { ProgressRadial, storePopup } from "@skeletonlabs/skeleton";
+    import { Modal, storePopup } from "@skeletonlabs/skeleton";
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -59,5 +59,6 @@
     </div>
 {/if}
 
+<Modal />
 <Toast />
 <slot />
