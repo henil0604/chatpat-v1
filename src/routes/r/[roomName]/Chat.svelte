@@ -39,7 +39,7 @@
     <!-- content -->
     <div class="w-full flex">
         <div
-            class="break-words w-full order-first mr-10 max-sm:mr-0 text-base max-md:text-sm"
+            class="break-words w-full order-first mr-10 max-sm:mr-3 text-base max-md:text-sm"
         >
             {chat.content}
         </div>
