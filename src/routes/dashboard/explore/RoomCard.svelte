@@ -1,10 +1,9 @@
 <script lang="ts">
     import Loading from "@/lib/components/Loading.svelte";
-    import Icon from "@iconify/svelte";
-    import type { Room } from "@prisma/client";
+    import type { Room, User } from "@prisma/client";
     import moment from "moment";
 
-    export let room: Room;
+    export let room: Room & { owner: User };
 
     let loading = false;
 </script>
@@ -26,8 +25,11 @@
 
     <!-- Actions -->
     <div class="mt-3 flex w-full justify-between items-center">
-        <div class="font-thin italic text-xs text-muted flex justify-end">
-            Created {moment(room.createdAt).fromNow()}
+        <div
+            class="font-thin tracking-tighter italic text-xs text-muted flex justify-end"
+        >
+            Created {moment(room.createdAt).fromNow()} by
+            <a class="mx-1" href="/u/{room.owner.id}">{room.owner.name}</a>
         </div>
         <div class="flex-center">
             <a
