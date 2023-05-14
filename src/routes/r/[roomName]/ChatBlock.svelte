@@ -48,7 +48,9 @@
                     id="content"
                     class="card rounded-md border-primary-500 overflow-hidden w-fit min-w-[300px] max-w-[80%] max-sm:max-w-none [100px]:bg-green-500 max-sm:min-w-none max-sm:w-full text-[14px]"
                 >
-                    <div class={`w-full p-2 max-md:py-1 variant-ghost-primary`}>
+                    <div
+                        class={`w-full p-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary`}
+                    >
                         {section.owner.name}
                     </div>
                     <div id="chats" class="flex flex-col">

@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { chat } from "@/store";
     import { onMount } from "svelte";
+    import moment from "moment";
 
     export let chat: chat;
     export let index: number;
@@ -43,11 +44,11 @@
             {chat.content}
         </div>
         <div
-            class="flex justify-end items-end text-right min-w-fit text-muted text-xs italic order-last tracking-tighter"
+            class="flex font-sans justify-end items-end text-right min-w-fit text-muted text-[11px] italic order-last"
         >
-            {new Date(chat.createdAt).toLocaleTimeString()}{chat.atClient
-                ? "(Sending...)"
-                : ""}
+            {new Date(chat.createdAt).toLocaleTimeString(undefined, {
+                timeStyle: "short",
+            })}{chat.atClient ? "(Sending...)" : ""}
         </div>
     </div>
 </div>
