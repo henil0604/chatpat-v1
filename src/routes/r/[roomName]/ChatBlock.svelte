@@ -41,15 +41,8 @@
                 >
                     {#if section.owner.id !== user.id}
                         <div
-                            class="w-fit rounded p-2 flex items-center gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary items-start"
+                            class="w-fit rounded p-2 flex gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary items-start"
                         >
-                            <div class="w-[30px]">
-                                <img
-                                    class="rounded-full"
-                                    src={section.owner.image}
-                                    alt="Failed!"
-                                />
-                            </div>
                             {section.owner.name}
                         </div>
                     {/if}
