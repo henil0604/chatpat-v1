@@ -14,6 +14,7 @@
     import type { Room } from "@prisma/client";
     import PasswordCard from "@/routes/r/[roomName]/PasswordCard.svelte";
 
+    const roomName: string = $page.params.roomName;
     const room: Room = $page.data.room;
 
     onMount(() => {
@@ -41,7 +42,24 @@
 </script>
 
 {#if !room}
-    404
+    <!-- 404 -->
+    <div class="flex-center h-full">
+        <div
+            class="card variant-ghost-primary flex flex-col p-4 max-w-[500px] max-md:max-w-none"
+        >
+            <h3 class="font-bold">Room not found</h3>
+            <hr class="my-3" />
+            <div class="font-thin">
+                Sorry but the Room <span class="font-bold italic highlighted"
+                    >{roomName}</span
+                > does not exists.
+            </div>
+            <div class="mt-3" />
+            <div class="w-full flex justify-end">
+                <a href="/dashboard" class="btn variant-filled">Go Back</a>
+            </div>
+        </div>
+    </div>
 {:else}
     {#if $roomAccessAllowed === undefined}
         <div />
