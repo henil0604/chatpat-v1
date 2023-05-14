@@ -55,6 +55,9 @@
         {#if room.visibility === "unlisted"}
             <Icon icon="el:paper-clip" />
         {/if}
+        {#if room.visibility === "private"}
+            <Icon icon="material-symbols:lock" />
+        {/if}
     </div>
     <hr class="my-2" />
     <div class="text-muted font-thin">
