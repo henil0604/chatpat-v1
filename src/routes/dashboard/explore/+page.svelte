@@ -80,7 +80,7 @@
             {#if $loading}
                 {#each Array(8) as _}
                     <div
-                        class="card variant-soft-primary p-3 min-w-[250px] max-md:min-w-[100px] relative flex gap-3 flex-col"
+                        class="card p-3 min-w-[250px] max-md:min-w-[100px] relative flex gap-3 flex-col"
                     >
                         <div class="placeholder" />
                         <div class="placeholder" />

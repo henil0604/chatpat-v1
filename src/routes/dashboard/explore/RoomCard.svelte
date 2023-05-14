@@ -8,9 +8,7 @@
     let loading = false;
 </script>
 
-<div
-    class="card variant-soft-primary p-3 min-w-[250px] max-md:min-w-[100px] relative"
->
+<div class="card p-3 min-w-[250px] max-md:min-w-[100px] relative">
     {#if loading}
         <div
             class="absolute w-full h-full top-0 left-0 backdrop-blur-sm z-[999] flex-center"
