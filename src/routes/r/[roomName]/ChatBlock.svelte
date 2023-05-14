@@ -41,7 +41,7 @@
                 >
                     {#if section.owner.id !== user.id}
                         <div
-                            class="w-fit rounded p-2 flex gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary items-start"
+                            class="w-fit rounded p-2 flex text-xs font-thin gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary items-start"
                         >
                             {section.owner.name}
                         </div>
