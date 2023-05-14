@@ -33,7 +33,7 @@
                     ? 'flex-row-reverse'
                     : ''}"
             >
-                <div id="avatar" class={`min-w-[40px]`}>
+                <!-- <div id="avatar" class={`min-w-[40px]`}>
                     <div class="avatar">
                         <div class="w-[35px]">
                             <img
@@ -43,14 +43,26 @@
                             />
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div
                     id="content"
                     class="card rounded-md border-primary-500 overflow-hidden w-fit min-w-[300px] max-w-[80%] max-sm:max-w-none [100px]:bg-green-500 max-sm:min-w-none max-sm:w-full text-[14px]"
                 >
                     <div
-                        class={`w-full p-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary`}
+                        class="w-full p-2 flex items-center gap-2 max-md:py-1 font-semibold text-primary-900 variant-soft-primary {section
+                            .owner.id === user.id
+                            ? 'flex-row-reverse'
+                            : ''}"
                     >
+                        {#if section.owner.id !== user.id}
+                            <div class="w-[30px]">
+                                <img
+                                    class="rounded-full"
+                                    src={section.owner.image}
+                                    alt="Failed!"
+                                />
+                            </div>
+                        {/if}
                         {section.owner.name}
                     </div>
                     <div id="chats" class="flex flex-col">
