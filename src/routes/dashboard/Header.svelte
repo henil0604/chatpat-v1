@@ -1,6 +1,25 @@
-<script>
+<script lang="ts">
+    import { goto } from "$app/navigation";
     import SettingsButton from "@/lib/components/SettingsButton.svelte";
-    import { AppBar } from "@skeletonlabs/skeleton";
+    import { AppBar, modalStore } from "@skeletonlabs/skeleton";
+
+    function handleJoinButton() {
+        modalStore.trigger({
+            type: "prompt",
+            title: "Join Room",
+            value: "",
+            valueAttr: {
+                required: true,
+                placeholder: "general",
+                autocomplete: "off",
+            },
+            response: (value: string) => {
+                if (!value) return;
+                goto(`/r/${value}`);
+            },
+            buttonTextSubmit: "Join",
+        });
+    }
 </script>
 
 <AppBar>
@@ -13,6 +32,10 @@
     <a href="/dashboard/explore">Explore</a>
 
     <svelte:fragment slot="trail">
+        <button
+            on:click={handleJoinButton}
+            class="btn btn-sm variant-filled-secondary">Join</button
+        >
         <!-- Settings Button -->
         <SettingsButton />
     </svelte:fragment>
