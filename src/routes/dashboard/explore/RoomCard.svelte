@@ -28,7 +28,7 @@
     </div>
 
     <!-- Actions -->
-    <div class="mt-3 flex w-full justify-between items-center">
+    <div class="mt-3 flex w-full justify-between items-end">
         <div
             class="font-thin tracking-tighter italic text-xs text-muted flex justify-end"
         >
