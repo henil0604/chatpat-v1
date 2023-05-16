@@ -32,6 +32,9 @@
 
     async function handleSend() {
         let messageContent = messageValue;
+        if (messageContent.trim() === "") {
+            return;
+        }
         messageValue = "";
 
         let data = {
