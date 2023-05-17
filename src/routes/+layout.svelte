@@ -24,18 +24,23 @@
     import "@/app.postcss";
     import { onMount } from "svelte";
     import setDarkMode from "@/utils/setDarkMode";
-    import { darkMode, loading } from "@/store";
+    import { darkMode, loading, userStore } from "@/store";
 
     import { Toast } from "@skeletonlabs/skeleton";
     import Loading from "@/lib/components/Loading.svelte";
 
     import { navigating } from "$app/stores";
+    import type { User } from "@prisma/client";
+
+    let user: User = $page.data?.user || null;
 
     // Checking for initial settings values
     onMount(() => {
         darkMode.subscribe((value) => {
             setDarkMode(value);
         });
+
+        userStore.set(user);
     });
 
     navigating.subscribe(() => {
@@ -60,5 +65,5 @@
 {/if}
 
 <Modal />
-<Toast />
+<Toast position="t" padding="py-2 px-3" />
 <slot />

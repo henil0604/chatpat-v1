@@ -9,7 +9,8 @@ export const CODE = {
     VALIDATION_ERROR: 'VALIDATION_ERROR',
     CREATED: 'CREATED',
     FOUND: 'FOUND',
-    DELETED: 'DELETED'
+    DELETED: 'DELETED',
+    DONE: 'DONE'
 }
 
 export const GITHUB_REPO_LINK = "https://github.com/henil0604/chatpat"
