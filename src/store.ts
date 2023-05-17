@@ -7,11 +7,12 @@ import transformChats from '@/utils/transformChats';
 
 export const darkMode = persisted<boolean>("chatpatDarkMode", true)
 
+export const userStore = writable<User | null>(null);
+
 export const loading = writable(false);
 export const roomAccessAllowed = writable<undefined | boolean>(undefined);
 export const originalRoomPassword = writable<string | null>(null);
 export const roomStore = writable<Room | null>(null);
-
 
 // Channel
 export const pusherChannel = writable<Channel | null>(null)
