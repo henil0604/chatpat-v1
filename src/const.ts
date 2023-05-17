@@ -11,3 +11,7 @@ export const CODE = {
     FOUND: 'FOUND',
     DELETED: 'DELETED'
 }
+
+export const GITHUB_REPO_LINK = "https://github.com/henil0604/chatpat"
+export const TWITTER_HANDLE_LINK = "https://twitter.com/realchatpat"
+export const EMAIL_HANDLE = "chatpat@henil.xyz"
