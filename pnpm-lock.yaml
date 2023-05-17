@@ -37,6 +37,9 @@ dependencies:
   svelte-local-storage-store:
     specifier: ^0.4.0
     version: 0.4.0(svelte@3.58.0)
+  svelte-typewriter:
+    specifier: ^3.1.6
+    version: 3.1.6(svelte@3.58.0)
   svelte-use-form:
     specifier: ^2.6.2
     version: 2.6.2
@@ -1797,6 +1800,14 @@ packages:
       svelte: 3.58.0
       typescript: 5.0.3
     dev: true
+
+  /svelte-typewriter@3.1.6(svelte@3.58.0):
+    resolution: {integrity: sha512-KmY0IWfq6RhTosfLMkZwmBwvwjIKh72jZnWE2taBivtfJJfvBAIrJ3oByObDzisnwUDqyV+ynQZP27SK5UUygg==}
+    peerDependencies:
+      svelte: '>=3.47.x'
+    dependencies:
+      svelte: 3.58.0
+    dev: false
 
   /svelte-use-form@2.6.2:
     resolution: {integrity: sha512-nPjhBTPwd5ZrHn38GVcnTlCi7dEwsVOsSmAFXOxMQpdLMMrjCJ3eAS4SrZ39zqIZU11/c3X5FQK4BvUC6Lai6A==}
