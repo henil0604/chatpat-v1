@@ -34,6 +34,10 @@
     });
 
     onDestroy(() => {
+        if ($pusherChannel) {
+            $pusherChannel.unbind_all();
+            $pusherChannel.disconnect();
+        }
         pusherChannel.set(null);
         roomAccessAllowed.set(undefined);
         originalRoomPassword.set(null);
