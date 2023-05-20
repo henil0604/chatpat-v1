@@ -14,6 +14,7 @@
     import { Avatar } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
     import ChatBlock from "./ChatBlock.svelte";
+    import { APP_NAME } from "@/const";
 
     let room: Room = $page.data.room;
     let chats: Chat[] = $page.data.chats;
@@ -25,6 +26,10 @@
         initPusherChannelForRoom(room);
     });
 </script>
+
+<svelte:head>
+    <title>{room.name} - {APP_NAME}</title>
+</svelte:head>
 
 <div id="body" class="grow-1 w-full h-full pt-5 pb-2 overflow-y-scroll">
     {#each $chatsStore as block, index}
