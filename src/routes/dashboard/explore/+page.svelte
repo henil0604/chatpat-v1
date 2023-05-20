@@ -1,13 +1,13 @@
 <script lang="ts">
     import { loading } from "@/store";
     import fetchExploreFeed from "@/utils/fetchExploreFeed";
-    import type { Room } from "@prisma/client";
+    import type { Room, User } from "@prisma/client";
     import { onMount } from "svelte";
     import RoomCard from "@/routes/dashboard/explore/RoomCard.svelte";
     import Icon from "@iconify/svelte";
 
-    let fetchedRooms: Room[] = [];
-    let rooms: Room[] = [];
+    let fetchedRooms: (Room & { owner: User })[] = [];
+    let rooms: (Room & { owner: User })[] = [];
 
     let searchQuery = "";
 

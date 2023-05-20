@@ -1,8 +1,8 @@
-import type { Room } from "@prisma/client";
+import type { Room, User } from "@prisma/client";
 import log from "./log";
 import { toastStore } from "@skeletonlabs/skeleton";
 
-export default async function fetchExploreFeed(): Promise<Room[] | null> {
+export default async function fetchExploreFeed(): Promise<(Room & { owner: User })[] | null> {
     try {
         const response = await fetch("/api/dashboard/explore", {
             method: "GET"

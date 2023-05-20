@@ -1,10 +1,10 @@
 import { cachify } from "@/lib/server/kv";
 import { prisma } from "@/lib/server/prisma";
-import type { Room } from "@prisma/client";
+import type { Room, User } from "@prisma/client";
 
 export default async function getExploreRooms() {
 
-    let allRooms = await cachify<Room[]>(
+    let allRooms = await cachify<(Room & { owner: User })[]>(
         `explore-rooms`,
         () => (prisma.room.findMany({
             include: {
