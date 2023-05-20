@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { chat } from "@/store";
+    import { userStore, type chat } from "@/store";
     import { onMount } from "svelte";
     import moment from "moment";
+    import Icon from "@iconify/svelte";
 
     export let chat: chat;
     export let index: number;
@@ -31,24 +32,45 @@
 
 <div
     bind:this={div}
-    class={`card items-end max-w-screen flex py-2 px-3 max-md:px-3 justify-between transition w-fit hover:bg-gray-400 dark:hover:bg-gray-800 ${
-        "" // index > 0 ? "pt-1" : ""
+    class={`card items-end max-w-screen flex py-1.5 pr-1.5 px-3 max-md:px-3 justify-between transition w-fit ${
+        chat.owner.id === $userStore?.id
+            ? "bg-teal-700 text-white dark:bg-tertiary-800"
+            : "variant-ghost dark:bg-cyan-950"
     }`}
     data-chat-id={chat.id}
 >
     <!-- content -->
     <div class="w-full flex">
         <div
-            class="break-words w-full order-first mr-10 max-sm:mr-3 text-base max-md:text-sm"
+            class="break-words w-full order-first mr-4 flex flex-col max-sm:mr-3 max-md:text-sm"
         >
-            {chat.content}
+            {#if index === 0 && chat.owner.id !== $userStore?.id}
+                <div
+                    class="text-[14px] font-semibold text-primary-800 dark:text-primary-600"
+                >
+                    {chat.owner.name}
+                </div>
+            {/if}
+            <div class="text-sm dark:text-white">
+                {chat.content}
+            </div>
         </div>
         <div
-            class="flex font-sans justify-end items-end text-right min-w-fit text-muted text-[11px] italic order-last"
+            class="flex mt-1 gap-1 font-sans justify-end items-end text-right min-w-fit text-[11px] order-last"
         >
-            {new Date(chat.createdAt).toLocaleTimeString(undefined, {
-                timeStyle: "short",
-            })}{chat.atClient ? "(Sending...)" : ""}
+            <div>
+                {new Date(chat.createdAt).toLocaleTimeString(undefined, {
+                    timeStyle: "short",
+                })}
+            </div>
+            <div>
+                {#if chat.atClient && !chat.failed}
+                    <Icon icon="material-symbols:timer-outline" />
+                {/if}
+                {#if chat.failed}
+                    <Icon color="red" icon="zondicons:exclamation-solid" />
+                {/if}
+            </div>
         </div>
     </div>
 </div>

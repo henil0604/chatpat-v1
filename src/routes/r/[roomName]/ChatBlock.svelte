@@ -39,20 +39,6 @@
                         ? 'items-end'
                         : 'items-start'}"
                 >
-                    {#if section.owner.id !== user.id}
-                        <div
-                            class="w-fit rounded p-2 flex text-xs font-thin gap-2 max-md:py-1 text-primary-900 variant-soft-primary items-center"
-                        >
-                            <div class="w-[25px]">
-                                <img
-                                    class="rounded-full"
-                                    src={section.owner.image}
-                                    alt="Failed!"
-                                />
-                            </div>
-                            {section.owner.name}
-                        </div>
-                    {/if}
                     <div
                         id="chats"
                         class="flex flex-col w-full gap-1 mt-1 {section.owner

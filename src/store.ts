@@ -17,7 +17,7 @@ export const roomStore = writable<Room | null>(null);
 // Channel
 export const pusherChannel = writable<Channel | null>(null)
 
-export type chat = Chat & { room: Room, owner: User, atClient?: boolean, color?: string };
+export type chat = Chat & { room: Room, owner: User, atClient?: boolean, failed?: boolean };
 export const chatsStore = writable<block[]>([]);
 export const rawChatsStore = writable<chat[]>([]);
 
