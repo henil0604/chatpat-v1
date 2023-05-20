@@ -7,7 +7,7 @@
         offset,
         arrow,
     } from "@floating-ui/dom";
-    import { Modal, storePopup } from "@skeletonlabs/skeleton";
+    import { Modal, drawerStore, storePopup } from "@skeletonlabs/skeleton";
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -31,6 +31,9 @@
 
     import { navigating } from "$app/stores";
     import type { User } from "@prisma/client";
+
+    import { Drawer } from "@skeletonlabs/skeleton";
+    import AppDrawerContent from "@/lib/components/AppDrawerContent.svelte";
 
     let user: User = $page.data?.user || null;
 
@@ -63,6 +66,12 @@
         <Loading width="40px" />
     </div>
 {/if}
+
+<Drawer>
+    {#if $drawerStore.id === "appDrawer"}
+        <AppDrawerContent />
+    {:else}{/if}
+</Drawer>
 
 <Modal />
 <Toast position="t" padding="py-2 px-3" />
