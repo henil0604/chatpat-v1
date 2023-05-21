@@ -34,7 +34,7 @@
         <div class="">Before accessing...</div>
         <button
             on:click={() => signIn("github")}
-            class="btn bg-slate-950 flex gap-2 justify-center items-center"
+            class="btn bg-slate-950 text-white flex gap-2 justify-center items-center"
             ><Icon class="text-xl" icon="mdi:github" /> Login with Github</button
         >
         <button
