@@ -33,7 +33,9 @@
             class="font-thin tracking-tighter italic text-xs text-muted flex justify-end"
         >
             Created {moment(room.createdAt).fromNow()} by
-            <a class="mx-1" href="/u/{room.owner.id}">{room.owner.name}</a>
+            <a class="mx-1" href="/u/{room.owner.username}"
+                >@{room.owner.username}</a
+            >
         </div>
         <div class="flex-center">
             <a
