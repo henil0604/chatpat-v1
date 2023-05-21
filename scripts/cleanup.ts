@@ -24,3 +24,9 @@ for (const room of allRooms) {
 
     console.log(`Deleted room: ${room.name}`);
 }
+
+
+
+console.log("Deleting all users");
+const allUsersDeleted = await prisma.user.deleteMany()
+console.log("Deleted all users");

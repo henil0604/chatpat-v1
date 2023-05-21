@@ -11,11 +11,12 @@ declare global {
 		// interface Platform {}
 		interface Session implements DefaultSession {
 			user?: {
-				name?: string | null
-				email?: string | null
+				username?: string | null,
+				name?: string | null,
+				email?: string | null,
 				image?: string | null,
 				id?: string | null,
-				settings?: Settings
+				settings?: Settings,
 			}
 			expires: string
 		}

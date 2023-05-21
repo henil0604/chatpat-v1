@@ -9,8 +9,11 @@ import { prisma } from "@/lib/server/prisma";
 import createSettingsForUser from "@/utils/server/createSettingsForUser";
 import getUserSettings from "@/utils/server/getUserSettings";
 import log from "@/utils/log";
+import { redirect, type Handle } from "@sveltejs/kit";
+import { sequence } from "@sveltejs/kit/hooks";
+import isProtectedRoute from "./utils/isProtectedRoute";
 
-export const handle = SvelteKitAuth({
+const authHandle: Handle = SvelteKitAuth({
     providers: [
         GitHub({
             clientId: GITHUB_ID,
@@ -26,8 +29,10 @@ export const handle = SvelteKitAuth({
     adapter: PrismaAdapter(prisma),
     callbacks: {
         session: async ({ session, user }) => {
+
             if (session.user) {
                 session.user.id = user.id;
+                session.user.username = user.username;
             }
 
             try {
@@ -38,8 +43,7 @@ export const handle = SvelteKitAuth({
             }
 
             return session;
-        },
-
+        }
     },
     events: {
         async createUser({ user }) {
@@ -48,6 +52,20 @@ export const handle = SvelteKitAuth({
             } catch (e) {
                 log(`[hooks][events][createUser]`, e, 'error')
             }
+
         }
     }
 })
+
+const onBoardingHandle: Handle = async ({ event, resolve }) => {
+    const session = await event.locals.getSession();
+
+    if (isProtectedRoute(event.url.pathname) && session?.user && !session.user.username) {
+        throw redirect(301, `/onboarding?redirectTo=${event.url.pathname}`)
+    }
+
+    return resolve(event);
+}
+
+
+export const handle = sequence(authHandle, onBoardingHandle);

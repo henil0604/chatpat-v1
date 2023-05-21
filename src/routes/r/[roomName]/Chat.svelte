@@ -48,7 +48,7 @@
                 <div
                     class="text-[14px] font-semibold text-primary-800 dark:text-primary-600"
                 >
-                    {chat.owner.name}
+                    @{chat.owner.username}
                 </div>
             {/if}
             <div class="text-sm dark:text-white">
