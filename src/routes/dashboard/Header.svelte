@@ -9,6 +9,8 @@
             type: "prompt",
             title: "Join Room",
             value: "",
+            position: "items-start",
+            backdropClasses: "dark text-white",
             valueAttr: {
                 required: true,
                 placeholder: "general",
