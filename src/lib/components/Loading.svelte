@@ -1,107 +1,24 @@
 <script lang="ts">
-    export let width = "40px";
+    export let scale = 1;
 </script>
 
-<div class={`spinner`} style="--width:{width}">
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-</div>
+<div class={`spinner`} style="--scale:{scale}" />
 
 <style scoped>
     .spinner {
-        -webkit-animation: spinner-y0fdc1 2s infinite ease;
-        animation: spinner-y0fdc1 2s infinite ease;
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-        width: var(--width);
-        height: var(--width);
+        --color: #38bdf8;
+        --duration: 0.6s;
+        width: 6px;
+        height: 6px;
+        animation: spinner-xp626r var(--duration) infinite;
+        border-radius: 50%;
+        box-shadow: 24px 0 0 6px var(--color), -24px 0 0 6px var(--color);
+        scale: var(--scale);
     }
 
-    .spinner > div {
-        background-color: rgba(77, 214, 227, 0.2);
-        height: 100%;
-        position: absolute;
-        width: 100%;
-        border: 2px solid #38eded;
-    }
-
-    .spinner div:nth-of-type(1) {
-        -webkit-transform: translateZ(-22px) rotateY(180deg);
-        transform: translateZ(-22px) rotateY(180deg);
-    }
-
-    .spinner div:nth-of-type(2) {
-        -webkit-transform: rotateY(-270deg) translateX(50%);
-        transform: rotateY(-270deg) translateX(50%);
-        -webkit-transform-origin: top right;
-        -ms-transform-origin: top right;
-        transform-origin: top right;
-    }
-
-    .spinner div:nth-of-type(3) {
-        -webkit-transform: rotateY(270deg) translateX(-50%);
-        transform: rotateY(270deg) translateX(-50%);
-        -webkit-transform-origin: center left;
-        -ms-transform-origin: center left;
-        transform-origin: center left;
-    }
-
-    .spinner div:nth-of-type(4) {
-        -webkit-transform: rotateX(90deg) translateY(-50%);
-        transform: rotateX(90deg) translateY(-50%);
-        -webkit-transform-origin: top center;
-        -ms-transform-origin: top center;
-        transform-origin: top center;
-    }
-
-    .spinner div:nth-of-type(5) {
-        -webkit-transform: rotateX(-90deg) translateY(50%);
-        transform: rotateX(-90deg) translateY(50%);
-        -webkit-transform-origin: bottom center;
-        -ms-transform-origin: bottom center;
-        transform-origin: bottom center;
-    }
-
-    .spinner div:nth-of-type(6) {
-        -webkit-transform: translateZ(22px);
-        transform: translateZ(22px);
-    }
-
-    @-webkit-keyframes spinner-y0fdc1 {
-        0% {
-            -webkit-transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
-            transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
-        }
-
-        50% {
-            -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
-            transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
-        }
-
-        100% {
-            -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
-            transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
-        }
-    }
-
-    @keyframes spinner-y0fdc1 {
-        0% {
-            -webkit-transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
-            transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
-        }
-
-        50% {
-            -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
-            transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
-        }
-
-        100% {
-            -webkit-transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
-            transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+    @keyframes spinner-xp626r {
+        to {
+            transform: rotate(360deg);
         }
     }
 </style>

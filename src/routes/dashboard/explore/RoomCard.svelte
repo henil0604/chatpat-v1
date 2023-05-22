@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Loading from "@/lib/components/Loading.svelte";
+    import LoadingOverlay from "@/lib/components/LoadingOverlay.svelte";
     import type { Room, User } from "@prisma/client";
     import moment from "moment";
 
@@ -12,11 +12,7 @@
     class="card p-3 flex flex-col justify-between min-w-[250px] max-md:min-w-[100px] relative"
 >
     {#if loading}
-        <div
-            class="absolute w-full h-full top-0 left-0 backdrop-blur-sm z-[999] flex-center"
-        >
-            <Loading width="28px" />
-        </div>
+        <LoadingOverlay scale={0.5} />
     {/if}
 
     <div>

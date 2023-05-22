@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Loading from "@/lib/components/Loading.svelte";
     import deleteRoom from "@/utils/deleteRoom";
     import sleep from "@/utils/sleep";
     import Icon from "@iconify/svelte";
@@ -7,6 +6,7 @@
     import { toastStore } from "@skeletonlabs/skeleton";
     import { createEventDispatcher } from "svelte";
     import moment from "moment";
+    import LoadingOverlay from "@/lib/components/LoadingOverlay.svelte";
 
     export let room: Room;
 
@@ -42,11 +42,7 @@
     class="card p-3 min-w-[250px] flex flex-col justify-between max-md:min-w-[100px] relative"
 >
     {#if loading}
-        <div
-            class="absolute w-full h-full top-0 left-0 backdrop-blur-sm z-[999] flex-center"
-        >
-            <Loading width="28px" />
-        </div>
+        <LoadingOverlay scale={0.5} />
     {/if}
 
     <div>

@@ -27,13 +27,13 @@
     import { darkMode, loading, userStore } from "@/store";
 
     import { Toast } from "@skeletonlabs/skeleton";
-    import Loading from "@/lib/components/Loading.svelte";
 
     import { navigating } from "$app/stores";
     import type { User } from "@prisma/client";
 
     import { Drawer } from "@skeletonlabs/skeleton";
     import AppDrawerContent from "@/lib/components/AppDrawerContent.svelte";
+    import LoadingOverlay from "@/lib/components/LoadingOverlay.svelte";
 
     let user: User = $page.data?.user || null;
 
@@ -60,11 +60,7 @@
 </script>
 
 {#if $loading}
-    <div
-        class="fixed w-screen h-screen top-0 left-0 backdrop-blur-md z-[999] flex-center"
-    >
-        <Loading width="40px" />
-    </div>
+    <LoadingOverlay scale={1} />
 {/if}
 
 <Drawer>
