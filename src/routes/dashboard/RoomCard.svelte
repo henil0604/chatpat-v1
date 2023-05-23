@@ -7,6 +7,7 @@
     import { createEventDispatcher } from "svelte";
     import moment from "moment";
     import LoadingOverlay from "@/lib/components/LoadingOverlay.svelte";
+    import { fade, fly } from "svelte/transition";
 
     export let room: Room;
 
@@ -39,6 +40,7 @@
 </script>
 
 <div
+    in:fade
     class="card p-3 min-w-[250px] flex flex-col justify-between max-md:min-w-[100px] relative"
 >
     {#if loading}

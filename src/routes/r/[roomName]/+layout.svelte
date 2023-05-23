@@ -13,6 +13,7 @@
     import Footer from "@/routes/r/[roomName]/Footer.svelte";
     import type { Room } from "@prisma/client";
     import PasswordCard from "@/routes/r/[roomName]/PasswordCard.svelte";
+    import { fly } from "svelte/transition";
 
     const roomName: string = $page.params.roomName;
     const room: Room = $page.data.room;
