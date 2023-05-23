@@ -21,6 +21,9 @@ module.exports = {
   safelist: [
     {
       pattern: /text-./
+    },
+    {
+      pattern: /bg-./
     }
   ]
 }

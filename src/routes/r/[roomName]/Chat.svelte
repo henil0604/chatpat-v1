@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import moment from "moment";
     import Icon from "@iconify/svelte";
+    import { fly } from "svelte/transition";
 
     export let chat: chat;
     export let index: number;
@@ -31,6 +32,7 @@
 </script>
 
 <div
+    in:fly={{ x: chat.owner.id === $userStore?.id ? -50 : 50 }}
     bind:this={div}
     class={`card items-end max-w-screen flex py-1.5 pr-1.5 px-3 max-md:px-3 justify-between transition w-fit ${
         chat.owner.id === $userStore?.id

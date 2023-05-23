@@ -4,13 +4,15 @@
     import fetchUserRooms from "@/utils/fetchUserRooms";
     import type { Room } from "@prisma/client";
     import { onMount } from "svelte";
+    import Typewriter from "svelte-typewriter/Typewriter.svelte";
+    import { fade } from "svelte/transition";
 
     let rooms: Room[];
 
     onMount(async () => {
-        loading.set(true);
-        rooms = await fetchUserRooms();
         loading.set(false);
+        // loading.set(true);
+        rooms = await fetchUserRooms();
     });
 
     async function onDeleteHandler({ detail }: { detail: Room }) {
@@ -22,7 +24,9 @@
 
 <div class="p-4">
     <div class="flex justify-between">
-        <h4>Your Rooms</h4>
+        <Typewriter>
+            <h4>Your Rooms</h4>
+        </Typewriter>
         <a href="/dashboard/create" class="btn btn-sm variant-filled-primary"
             >Create</a
         >
@@ -41,6 +45,7 @@
         {:else}
             {#each Array(8) as _}
                 <div
+                    in:fade
                     class="card p-3 min-w-[250px] max-md:min-w-[100px] relative flex gap-3 flex-col"
                 >
                     <div class="placeholder" />

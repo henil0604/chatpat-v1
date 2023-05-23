@@ -46,8 +46,6 @@
         }
 
         goto(`/r/${created.name}`);
-
-        await sleep(1000);
     }
 
     onMount(() => {
