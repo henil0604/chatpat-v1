@@ -1,15 +1,8 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { PUBLIC_TRANSPORT_SECRET } from "$env/static/public";
-    import {
-        addChat,
-        chatQueue,
-        getChat,
-        sendingChat,
-        updateChat,
-    } from "@/store";
+    import { addChat, getChat, sendingChat, updateChat } from "@/store";
     import { encrypt } from "@/utils/crypto";
-    import messageQueueHandler from "@/utils/messageQueueHandler";
     import randomString from "@/utils/randomString";
     import sendMessage from "@/utils/sendMessage";
     import Icon from "@iconify/svelte";
@@ -20,15 +13,6 @@
     let user: User = $page.data.user;
 
     let messageValue = "";
-
-    onMount(() => {
-        setInterval(async () => {
-            const queue = $chatQueue;
-            if (!$sendingChat && queue.length > 0) {
-                messageQueueHandler(queue);
-            }
-        }, 100);
-    });
 
     async function handleSend() {
         let messageContent = messageValue;
@@ -55,9 +39,10 @@
             atClient: true,
         });
 
-        chatQueue.update((queue) => {
-            queue.push(data.id);
-            return queue;
+        await sendMessage(room?.name as string, {
+            id: data.id,
+            message: encrypt(data.message, PUBLIC_TRANSPORT_SECRET),
+            createdAt: Date.now(),
         });
 
         return true;
