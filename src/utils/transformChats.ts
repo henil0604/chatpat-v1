@@ -30,7 +30,7 @@ export default function transformChats(chats: chat[]) {
     let currentBlock: block | null = null
     let currentSection: section | null = null
 
-    chats = chats.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+    // chats = chats.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 
     chats.forEach(chat => {
         const date = isToday(new Date(chat.createdAt)) ? "Today" : new Date(chat.createdAt).toDateString()

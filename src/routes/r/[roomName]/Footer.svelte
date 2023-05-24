@@ -8,7 +8,7 @@
     import Icon from "@iconify/svelte";
     import type { Room, User } from "@prisma/client";
     import { onMount } from "svelte";
-    import refetchUser from '@/utils/refetchUser'
+    import refetchUser from "@/utils/refetchUser";
 
     let room: Room = $page.data.room;
     let user: App.Session["user"] = $page.data.user;
@@ -32,8 +32,8 @@
             id: data.id,
             createdAt: new Date(data.createdAt),
             updatedAt: new Date(data.createdAt),
-            owner: user,
-            ownerId: user.id,
+            owner: user as User,
+            ownerId: (user as User).id,
             room: room,
             roomId: room.id,
             content: messageContent,
