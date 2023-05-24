@@ -7,8 +7,11 @@
     import refetchUser from "@/utils/refetchUser";
 
     let interval: any;
+    let balance: number;
+    let balanceIndicatorComponent: any;
 
     onMount(() => {
+        balance = $userStore?.wallet?.balance as number;
         interval = setInterval(async () => {
             refetchUser();
         }, 10000);
@@ -17,10 +20,25 @@
     onDestroy(() => {
         clearInterval(interval);
     });
+
+    userStore.subscribe((user) => {
+        if (user?.wallet && user?.wallet?.balance !== balance) {
+            console.log(user.wallet.balance, balance);
+            const diff = user?.wallet.balance - balance;
+
+            console.log("diff?", diff);
+            if (isNaN(diff)) return;
+
+            balanceIndicatorComponent?.animateDiff?.(diff);
+
+            balance = user?.wallet?.balance || balance;
+        }
+    });
 </script>
 
 <User let:user>
     <BalanceIndicator
-        amount={parseFloat(($userStore?.wallet?.balance || -1).toFixed(2))}
+        bind:this={balanceIndicatorComponent}
+        amount={parseFloat((balance || -1).toFixed(2))}
     />
 </User>
