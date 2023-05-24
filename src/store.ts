@@ -54,3 +54,5 @@ export function updateChat(id: string, data: any) {
 }
 
 export const sendingChat = writable<boolean>(false);
+
+export const roomSpentTimeInSeconds = writable<number>(0);

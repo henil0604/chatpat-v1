@@ -34,6 +34,7 @@
     import { Drawer } from "@skeletonlabs/skeleton";
     import AppDrawerContent from "@/lib/components/AppDrawerContent.svelte";
     import LoadingOverlay from "@/lib/components/LoadingOverlay.svelte";
+    import { addActivity } from "@/stores/activity";
 
     let user: App.Session["user"] = $page.data?.user || null;
 
@@ -44,6 +45,48 @@
         });
 
         userStore.set(user);
+
+        // activity checkers
+        window.addEventListener("click", (e) => {
+            addActivity({
+                event: "click",
+                timestamp: new Date(),
+                path: $page.url.pathname,
+                meta: e,
+            });
+        });
+        window.addEventListener("drag", (e) => {
+            addActivity({
+                event: "drag",
+                timestamp: new Date(),
+                path: $page.url.pathname,
+                meta: e,
+            });
+        });
+        window.addEventListener("keypress", (e) => {
+            addActivity({
+                event: "keypress",
+                timestamp: new Date(),
+                path: $page.url.pathname,
+                meta: e,
+            });
+        });
+        window.addEventListener("blur", (e) => {
+            addActivity({
+                event: "blur",
+                timestamp: new Date(),
+                path: $page.url.pathname,
+                meta: e,
+            });
+        });
+        window.addEventListener("focus", (e) => {
+            addActivity({
+                event: "focus",
+                timestamp: new Date(),
+                path: $page.url.pathname,
+                meta: e,
+            });
+        });
     });
 
     navigating.subscribe(() => {

@@ -35,10 +35,6 @@
             rounded: "rounded-sm",
         });
     }
-
-    userStore.subscribe((u) => {
-        console.log(u);
-    });
 </script>
 
 <AppBar>
