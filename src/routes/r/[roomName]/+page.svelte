@@ -19,7 +19,7 @@
 
     let room: Room = $page.data.room;
     let chats: Chat[] = $page.data.chats;
-    let user: User = $page.data.user;
+    let user: App.Session["user"] = $page.data.user;
 
     onMount(() => {
         rawChatsStore.set(chats as any);

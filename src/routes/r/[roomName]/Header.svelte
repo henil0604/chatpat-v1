@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import WalletCard from "@/lib/components/WalletCard.svelte";
     import Icon from "@iconify/svelte";
     import { AppBar, popup, type PopupSettings } from "@skeletonlabs/skeleton";
 
@@ -37,5 +38,7 @@
         <div class="placeholder animate-pulse w-[100px]" />
     {/if}
 
-    <svelte:fragment slot="trail" />
+    <svelte:fragment slot="trail">
+        <WalletCard />
+    </svelte:fragment>
 </AppBar>

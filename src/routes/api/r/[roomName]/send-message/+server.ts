@@ -11,8 +11,9 @@ import pusher from "@/lib/server/pusher";
 import getRoomByNameOrThrowIfNotExists from "@/utils/server/getRoomByNameOrThrowIfNotExists";
 import log from "@/utils/log";
 import addChat from "@/utils/server/addChat";
-import { CODE } from "@/const";
+import { CODE, REWARDS } from "@/const";
 import { MESSAGE_STORE_SECRET } from "$env/static/private";
+import changeUserWalletBalance from "@/utils/server/changeUserWalletBalance";
 
 export const POST: RequestHandler = async ({ request, locals, params }) => {
 
@@ -72,6 +73,8 @@ export const POST: RequestHandler = async ({ request, locals, params }) => {
         throw error(500, "Something went wrong with database query")
         // TODO: send warning to all users that this message was not stored in database
     }
+
+    await changeUserWalletBalance(user.id as string, REWARDS.SEND_MESSAGE)
 
     return json({
         message: "Message Sent",

@@ -1,6 +1,9 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import SettingsButton from "@/lib/components/SettingsButton.svelte";
+    import { page } from "$app/stores";
+    import User from "@/lib/components/User.svelte";
+    import WalletCard from "@/lib/components/WalletCard.svelte";
+    import { userStore } from "@/store";
     import Icon from "@iconify/svelte";
     import { AppBar, drawerStore, modalStore } from "@skeletonlabs/skeleton";
 
@@ -32,6 +35,10 @@
             rounded: "rounded-sm",
         });
     }
+
+    userStore.subscribe((u) => {
+        console.log(u);
+    });
 </script>
 
 <AppBar>
@@ -46,7 +53,8 @@
             on:click={handleJoinButton}
             class="btn btn-sm variant-filled-secondary">Join</button
         >
-        <!-- Settings Button -->
+        <!-- Wallet Card -->
+        <WalletCard />
         <button
             on:click={handleDrawerOpen}
             class="px-3 btn variant-filled-secondary"

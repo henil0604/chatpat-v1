@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { Settings } from "@prisma/client"
+import type { Settings, Wallet } from "@prisma/client"
 
 // for information about these interfaces
 declare global {
@@ -9,7 +9,7 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface Platform {}
-		interface Session implements DefaultSession {
+		interface Session {
 			user?: {
 				username?: string | null,
 				name?: string | null,
@@ -17,10 +17,12 @@ declare global {
 				image?: string | null,
 				id?: string | null,
 				settings?: Settings,
+				wallet?: Wallet,
 			}
 			expires: string
 		}
 	}
+
 }
 
 export { };

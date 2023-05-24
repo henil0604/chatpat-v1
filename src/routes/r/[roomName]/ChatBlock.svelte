@@ -6,7 +6,7 @@
     import { onMount } from "svelte";
     import { rawChatsStore } from "@/store";
 
-    let user: User = $page.data.user;
+    let user: App.Session["user"] = $page.data.user;
     export let block: block;
 
     onMount(() => {
