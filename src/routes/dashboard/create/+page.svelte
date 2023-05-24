@@ -13,6 +13,7 @@
     import sleep from "@/utils/sleep";
     import { onMount } from "svelte";
     import BalanceIndicator from "@/lib/components/BalanceIndicator.svelte";
+    import { RadioGroup, RadioItem } from "@skeletonlabs/skeleton";
 
     const form = useForm({
         roomName: {
@@ -71,7 +72,7 @@
         <hr class="my-3 w-full" />
 
         <form
-            class="w-full flex-center gap-3 flex-col"
+            class="w-full flex gap-3 flex-col"
             use:form
             on:submit|preventDefault={handleSubmit}
         >
@@ -99,13 +100,35 @@
                 />
             </label>
 
-            <label class="label w-full">
+            <!-- <label class="label w-full">
                 <span>Visibility</span>
                 <select name="visibility" required class="select">
                     <option value="unlisted">Unlisted</option>
                     <option value="public">Public</option>
                     <option value="private">Private</option>
                 </select>
+            </label> -->
+
+            <!-- svelte-ignore a11y-label-has-associated-control -->
+            <label class="label flex flex-col w-full">
+                <span>Visibility</span>
+                <RadioGroup class="w-fit">
+                    <RadioItem
+                        bind:group={$form.visibility.value}
+                        name="visibility"
+                        value={"public"}>Public</RadioItem
+                    >
+                    <RadioItem
+                        bind:group={$form.visibility.value}
+                        name="visibility"
+                        value={"unlisted"}>Unlisted</RadioItem
+                    >
+                    <RadioItem
+                        bind:group={$form.visibility.value}
+                        name="visibility"
+                        value={"private"}>Private</RadioItem
+                    >
+                </RadioGroup>
             </label>
 
             {#if $form.visibility?.value === "private"}
