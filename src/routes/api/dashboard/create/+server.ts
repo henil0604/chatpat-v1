@@ -9,6 +9,8 @@ import getRoomByName from "@/utils/server/getRoomByName";
 import { decrypt } from "@/utils/crypto";
 import { PUBLIC_TRANSPORT_SECRET } from "$env/static/public";
 import changeUserWalletBalance from "@/utils/server/changeUserWalletBalance";
+import hasEnoughMoneyOrThrow from "@/utils/server/hasEnoughMoneyOrThrow";
+import type { Wallet } from "@prisma/client";
 
 function getRoomPriceByVisibility(visibility: string) {
     if (visibility === 'public') return PUBLIC_ROOM_CREATION_PRICE;
@@ -53,13 +55,15 @@ export const POST: RequestHandler = async ({ locals, request }) => {
         }, { status: 400 });
     }
 
+    const cost = getRoomPriceByVisibility(data.visibility);
+
+    hasEnoughMoneyOrThrow(user.wallet as Wallet, cost);
+
+    await changeUserWalletBalance(user.id as string, -cost)
+
     const room = await createRoom({
         ...data
     }, user)
-
-    const cost = getRoomPriceByVisibility(data.visibility);
-
-    await changeUserWalletBalance(user.id as string, -cost)
 
     console.log(room)
 

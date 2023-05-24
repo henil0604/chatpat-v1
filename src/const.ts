@@ -10,7 +10,8 @@ export const CODE = {
     CREATED: 'CREATED',
     FOUND: 'FOUND',
     DELETED: 'DELETED',
-    DONE: 'DONE'
+    DONE: 'DONE',
+    WALLET_ERROR: 'WALLET_ERROR'
 }
 
 export const GITHUB_REPO_LINK = "https://github.com/henil0604/chatpat"

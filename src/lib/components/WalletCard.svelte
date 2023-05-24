@@ -23,6 +23,9 @@
 
     userStore.subscribe((user) => {
         if (user?.wallet && user?.wallet?.balance !== balance) {
+            if (!balance) {
+                balance = user.wallet.balance;
+            }
             console.log(user.wallet.balance, balance);
             const diff = user?.wallet.balance - balance;
 

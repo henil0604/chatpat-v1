@@ -1,7 +1,8 @@
 import type { Room } from '@prisma/client'
-import { encrypt } from './crypto'
+import { encrypt } from '@/utils/crypto'
 import { PUBLIC_TRANSPORT_SECRET } from '$env/static/public'
 import { toastStore } from '@skeletonlabs/skeleton';
+import refetchUser from '@/utils/refetchUser';
 
 export interface CreateRoomOptions {
     name: string
@@ -36,6 +37,8 @@ export default async function createRoom(options: CreateRoomOptions): Promise<Ro
                 timeout: 5000
             })
         }
+
+        refetchUser()
 
         return data.data;
 

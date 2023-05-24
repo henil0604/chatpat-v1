@@ -13,7 +13,6 @@ export function addActivity(data: Activity) {
         e.push(data);
         return e;
     })
-    console.log(`Activity Registered:`, data.event, data);
 }
 
 export function isInactive(threshold = 30) {
