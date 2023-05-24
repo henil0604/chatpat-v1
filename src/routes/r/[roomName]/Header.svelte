@@ -2,7 +2,6 @@
     import { page } from "$app/stores";
     import Icon from "@iconify/svelte";
     import { AppBar, popup, type PopupSettings } from "@skeletonlabs/skeleton";
-    import Typewriter from "svelte-typewriter";
 
     let goToDashboardPopupSettings: PopupSettings = {
         event: "hover",
@@ -28,11 +27,15 @@
         </a>
     </svelte:fragment>
 
-    <div
-        class="text-xl max-md:text-lg max-sm:text-base font-bold flex-center w-fit"
-    >
-        <Typewriter interval={100}>{$page.data?.room?.name}</Typewriter>
-    </div>
+    {#if $page.data?.room?.name}
+        <div
+            class="text-xl max-md:text-lg max-sm:text-base font-bold flex-center w-fit"
+        >
+            {$page.data.room.name}
+        </div>
+    {:else}
+        <div class="placeholder animate-pulse w-[100px]" />
+    {/if}
 
     <svelte:fragment slot="trail" />
 </AppBar>

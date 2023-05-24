@@ -2,7 +2,7 @@ export const APP_NAME = 'ChatPat';
 export const APP_TAGLINE = 'Flavour of Privacy';
 
 export const REGEX = {
-    alphanumeric: /^[A-Za-z0-9_-]*$/
+    alphanumeric: /^[A-Za-z0-9_\.-]*$/
 }
 
 export const CODE = {

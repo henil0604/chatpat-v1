@@ -42,7 +42,6 @@
         await sendMessage(room?.name as string, {
             id: data.id,
             message: encrypt(data.message, PUBLIC_TRANSPORT_SECRET),
-            createdAt: Date.now(),
         });
 
         return true;

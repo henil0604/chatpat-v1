@@ -64,6 +64,10 @@ const onBoardingHandle: Handle = async ({ event, resolve }) => {
         throw redirect(301, `/onboarding?redirectTo=${event.url.pathname}`)
     }
 
+    if (session?.user && session.user.username && event.url.pathname === "/onboarding") {
+        throw redirect(301, "/dashboard")
+    }
+
     return resolve(event);
 }
 

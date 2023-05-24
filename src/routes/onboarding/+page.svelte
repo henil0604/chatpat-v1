@@ -21,7 +21,7 @@
 
     const form = useForm({
         username: {
-            initial: "",
+            initial: user?.name.toLowerCase().split(" ").join(".") || "",
             validators: [minLength(2), required, pattern(REGEX.alphanumeric)],
         },
     });
@@ -77,24 +77,17 @@
                 Hey, <span class="highlighted">{user?.name}</span>
             </h3>
 
-            <hr class="mt-2 mb-3" />
-
-            <div class="text-center break-words">
-                Before you Continue, we need some information about your account
-            </div>
-
             <div class="mt-3" />
             <hr class="mt-1 mb-4" />
 
             <form
-                class="w-full flex-center gap-3 flex-col"
+                class="w-full min-w-[500px] flex-center gap-3 flex-col"
                 use:form
                 on:submit|preventDefault={handleSubmit}
             >
                 <!-- Username -->
-                <div
-                    class="input-group input-group-divider grid-cols-[1fr_auto]"
-                >
+                <label class="label w-full">
+                    <span>Username</span>
                     <input
                         class="input max-md:text-sm"
                         type="text"
@@ -104,40 +97,7 @@
                             $form.username?.touched}
                         on:input={checkUsername}
                     />
-                    {#if isUnameBeingChecked}
-                        <div title="Wait...">
-                            <ProgressRadial width="w-7" />
-                        </div>
-                    {:else}
-                        {#if !$form.username?.valid}
-                            <div title="Please enter valid username">
-                                <Icon
-                                    color="yellow"
-                                    icon="zondicons:exclamation-solid"
-                                />
-                            </div>
-                        {/if}
-
-                        {#if !isUnameValid && $form.username?.valid}
-                            <div title="Username is already taken">
-                                <Icon
-                                    color="red"
-                                    icon="zondicons:exclamation-solid"
-                                />
-                            </div>
-                        {/if}
-
-                        {#if isUnameValid && $form.username?.valid}
-                            <div title="Username is valid">
-                                <Icon
-                                    color="lime"
-                                    class="text-xl"
-                                    icon="material-symbols:check"
-                                />
-                            </div>
-                        {/if}
-                    {/if}
-                </div>
+                </label>
 
                 <div class="mt-6" />
                 <!-- actions -->

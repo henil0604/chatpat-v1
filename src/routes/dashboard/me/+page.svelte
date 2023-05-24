@@ -5,11 +5,11 @@
     import fetchUserSettings from "@/utils/fetchUserSettings";
     import setDarkMode from "@/utils/setDarkMode";
     import updateUserSettings from "@/utils/updateUserSettings";
-    import type { Settings } from "@prisma/client";
+    import type { Settings, User } from "@prisma/client";
     import { SlideToggle } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
 
-    const user = $page.data.user;
+    const user: User = $page.data.user;
 
     let settings: Settings | null | undefined = undefined;
 
@@ -44,6 +44,16 @@
             />
             <div class="flex flex-col gap-3 max-md:w-full">
                 <label class="label w-full">
+                    <span>Username</span>
+                    <input
+                        class="input w-full"
+                        value={user.username}
+                        type="text"
+                        disabled
+                        placeholder="Name"
+                    />
+                </label>
+                <label class="label w-full">
                     <span>Name</span>
                     <input
                         class="input w-full"
@@ -73,23 +83,23 @@
     <div class="card p-4 px-10 max-md:px-5">
         <div class="font-bold text-lg">Settings</div>
         <hr class="my-4" />
-        {#if settings === null}
-            <div class="text-lg font-bold text-red-500">
-                Failed to fetch settins
-            </div>
-        {/if}
-        {#if settings === undefined}
-            <div class="placeholder" />
-        {/if}
-        {#if settings}
-            <div class="flex flex-col gap-3">
-                <!-- Dark Mode -->
-                <SlideToggle
-                    on:change={async () => darkMode.set(!$darkMode)}
-                    name="settings-dark-mode"
-                    checked={$darkMode}>Dark Mode</SlideToggle
-                >
-            </div>
-        {/if}
+        <div class="flex flex-col gap-3">
+            <!-- Dark Mode -->
+            <SlideToggle
+                on:change={async () => darkMode.set(!$darkMode)}
+                name="settings-dark-mode"
+                checked={$darkMode}>Dark Mode</SlideToggle
+            >
+            {#if settings === null}
+                <div class="text-lg font-bold text-red-500">
+                    Failed to fetch settins
+                </div>
+            {/if}
+            {#if settings === undefined}
+                <div class="placeholder animate-pulse" />
+                <div class="placeholder animate-pulse" />
+            {/if}
+            {#if settings}{/if}
+        </div>
     </div>
 </div>
