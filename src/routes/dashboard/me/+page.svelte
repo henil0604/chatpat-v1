@@ -9,7 +9,7 @@
     import { SlideToggle } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
 
-    const user: User = $page.data.user;
+    const user: App.Session['user'] = $page.data.user;
 
     let settings: Settings | null | undefined = undefined;
 

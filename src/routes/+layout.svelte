@@ -35,7 +35,7 @@
     import AppDrawerContent from "@/lib/components/AppDrawerContent.svelte";
     import LoadingOverlay from "@/lib/components/LoadingOverlay.svelte";
 
-    let user: User = $page.data?.user || null;
+    let user: App.Session["user"] = $page.data?.user || null;
 
     // Checking for initial settings values
     onMount(() => {

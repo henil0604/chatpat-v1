@@ -14,7 +14,7 @@
 
     const redirectTo = $page.url.searchParams.get("redirectTo") || "/dashboard";
 
-    const user = $page.data.user;
+    const user: App.Session['user'] = $page.data.user;
 
     let isUnameValid = false;
     let isUnameBeingChecked = false;

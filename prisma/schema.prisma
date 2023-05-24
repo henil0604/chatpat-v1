@@ -49,6 +49,7 @@ model User {
   Room          Room[]
   Settings      Settings[]
   Chat          Chat[]
+  Wallet        Wallet[]
 }
 
 model VerificationToken {
@@ -92,4 +93,11 @@ model Chat {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Wallet {
+  id      String @id @default(cuid()) @map("_id")
+  balance Float
+  owber   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String @unique
 }

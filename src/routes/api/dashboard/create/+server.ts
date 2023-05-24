@@ -2,12 +2,20 @@ import validateSessionAndGetUserOrThrow from "@/utils/server/validateSessionAndG
 import type { RequestHandler } from "./$types";
 import { z } from "zod";
 import validateInput from "@/utils/server/validateInput";
-import { CODE, REGEX } from "@/const";
+import { CODE, PRIVATE_ROOM_CREATION_PRICE, PUBLIC_ROOM_CREATION_PRICE, REGEX, UNLISTED_ROOM_CREATION_PRICE } from "@/const";
 import { error, json } from "@sveltejs/kit";
 import createRoom from "@/utils/server/createRoom";
 import getRoomByName from "@/utils/server/getRoomByName";
 import { decrypt } from "@/utils/crypto";
 import { PUBLIC_TRANSPORT_SECRET } from "$env/static/public";
+import changeUserWalletBalance from "@/utils/server/changeUserWalletBalance";
+
+function getRoomPriceByVisibility(visibility: string) {
+    if (visibility === 'public') return PUBLIC_ROOM_CREATION_PRICE;
+    if (visibility === "unlisted") return UNLISTED_ROOM_CREATION_PRICE;
+    if (visibility === "private") return PRIVATE_ROOM_CREATION_PRICE;
+    return 0;
+}
 
 export const POST: RequestHandler = async ({ locals, request }) => {
 
@@ -48,6 +56,10 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     const room = await createRoom({
         ...data
     }, user)
+
+    const cost = getRoomPriceByVisibility(data.visibility);
+
+    await changeUserWalletBalance(user.id as string, -cost)
 
     console.log(room)
 

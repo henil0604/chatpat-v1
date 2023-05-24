@@ -7,7 +7,7 @@ import transformChats from '@/utils/transformChats';
 
 export const darkMode = persisted<boolean>("chatpatDarkMode", true)
 
-export const userStore = writable<User | null>(null);
+export const userStore = writable<App.Session['user'] | null>(null);
 
 export const loading = writable(false);
 export const roomAccessAllowed = writable<undefined | boolean>(undefined);

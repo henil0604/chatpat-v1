@@ -11,7 +11,9 @@ import getUserSettings from "@/utils/server/getUserSettings";
 import log from "@/utils/log";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
-import isProtectedRoute from "./utils/isProtectedRoute";
+import isProtectedRoute from "@/utils/isProtectedRoute";
+import createWalletForUser from "@/utils/server/createWalletForUser";
+import getUserWallet from "@/utils/server/getUserWallet";
 
 const authHandle: Handle = SvelteKitAuth({
     providers: [
@@ -37,7 +39,9 @@ const authHandle: Handle = SvelteKitAuth({
 
             try {
                 const settings = await getUserSettings(user.id);
+                const wallet = await getUserWallet(user.id);
                 session.user.settings = settings;
+                session.user.wallet = wallet;
             } catch (e) {
                 log(`[hooks][callbacks][session]`, e, 'error')
             }
@@ -50,7 +54,13 @@ const authHandle: Handle = SvelteKitAuth({
             try {
                 await createSettingsForUser(user.id);
             } catch (e) {
-                log(`[hooks][events][createUser]`, e, 'error')
+                log(`[hooks][events][createUser][createSettingsForUser]`, e, 'error')
+            }
+
+            try {
+                await createWalletForUser(user.id);
+            } catch (e) {
+                log(`[hooks][events][createUser][createWalletForUser]`, e, 'error')
             }
 
         }

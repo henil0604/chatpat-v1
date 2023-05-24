@@ -1,11 +1,18 @@
 <script lang="ts">
-    import { APP_NAME, REGEX } from "@/const";
+    import {
+        APP_NAME,
+        PRIVATE_ROOM_CREATION_PRICE,
+        PUBLIC_ROOM_CREATION_PRICE,
+        REGEX,
+        UNLISTED_ROOM_CREATION_PRICE,
+    } from "@/const";
     import createRoom from "@/utils/createRoom";
     import { useForm, minLength, required, pattern } from "svelte-use-form";
     import { loading } from "@/store";
     import { goto } from "$app/navigation";
     import sleep from "@/utils/sleep";
     import { onMount } from "svelte";
+    import BalanceIndicator from "@/lib/components/BalanceIndicator.svelte";
 
     const form = useForm({
         roomName: {
@@ -114,6 +121,30 @@
                     />
                 </label>
             {/if}
+
+            <aside class="alert variant-ghost-warning w-full">
+                <div class="alert-message flex">
+                    {#if $form.visibility?.value === "public"}
+                        <div class="flex-center gap-2">
+                            This action will cost <BalanceIndicator
+                                amount={PUBLIC_ROOM_CREATION_PRICE}
+                            />
+                        </div>
+                    {:else if $form.visibility?.value === "unlisted"}
+                        <div class="flex-center gap-2">
+                            This action will cost <BalanceIndicator
+                                amount={UNLISTED_ROOM_CREATION_PRICE}
+                            />
+                        </div>
+                    {:else}
+                        <div class="flex-center gap-2">
+                            This action will cost <BalanceIndicator
+                                amount={PRIVATE_ROOM_CREATION_PRICE}
+                            />
+                        </div>
+                    {/if}
+                </div>
+            </aside>
 
             <div class="mt-6" />
             <!-- actions -->

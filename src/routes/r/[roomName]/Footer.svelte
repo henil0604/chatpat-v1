@@ -8,9 +8,10 @@
     import Icon from "@iconify/svelte";
     import type { Room, User } from "@prisma/client";
     import { onMount } from "svelte";
+    import refetchUser from '@/utils/refetchUser'
 
     let room: Room = $page.data.room;
-    let user: User = $page.data.user;
+    let user: App.Session["user"] = $page.data.user;
 
     let messageValue = "";
 
@@ -43,6 +44,8 @@
             id: data.id,
             message: encrypt(data.message, PUBLIC_TRANSPORT_SECRET),
         });
+
+        refetchUser();
 
         return true;
     }

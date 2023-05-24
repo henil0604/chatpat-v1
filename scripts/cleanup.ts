@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient({});
 
-const doNotRemoveRooms = ['alpha-version-dev-logs', "give-feedback", "askus"];
+const doNotRemoveRooms: string[] = [];
 
 const allRooms = await prisma.room.findMany()
 

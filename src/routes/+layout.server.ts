@@ -1,7 +1,6 @@
 import { redirect } from "@sveltejs/kit";
 import isProtectedRoute from "@/utils/isProtectedRoute";
 
-
 /** @type {import('./$types').PageLoad} */
 export async function load({ locals, url }) {
     const session = await locals.getSession();
