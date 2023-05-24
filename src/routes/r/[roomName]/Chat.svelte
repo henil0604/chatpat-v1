@@ -34,7 +34,7 @@
 <div
     in:fly={{ x: chat.owner.id === $userStore?.id ? -50 : 50 }}
     bind:this={div}
-    class={`card items-end max-w-screen flex py-1.5 pr-1.5 px-3 max-md:px-3 justify-between transition w-fit ${
+    class={`card items-end max-w-screen flex py-1.5 pr-1.5 px-3 max-md:pr-1 justify-between transition w-fit ${
         chat.owner.id === $userStore?.id
             ? "bg-teal-700 text-white dark:bg-tertiary-800"
             : "variant-ghost dark:bg-cyan-950"

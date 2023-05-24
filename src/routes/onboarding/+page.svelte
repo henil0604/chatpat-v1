@@ -71,7 +71,7 @@
 {#if user}
     <div class="w-full h-full flex justify-center pt-10 max-md:p-0">
         <div
-            class="w-fit h-fit max-md:h-full card flex items-center flex-col p-4 max-w-[600px] max-md:max-w-none"
+            class="w-fit h-fit max-md:w-full max-md:h-full card flex items-center flex-col p-4 max-w-[600px] max-md:max-w-none"
         >
             <h3 class="font-semibold">
                 Hey, <span class="highlighted">{user?.name}</span>
@@ -81,7 +81,7 @@
             <hr class="mt-1 mb-4" />
 
             <form
-                class="w-full min-w-[500px] flex-center gap-3 flex-col"
+                class="w-[400px] max-md:w-full flex-center gap-3 flex-col"
                 use:form
                 on:submit|preventDefault={handleSubmit}
             >
